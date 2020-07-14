@@ -18,22 +18,22 @@ val projectName = "modb-mal"
 
 dependencies {
     api("io.github.manamiproject:modb-core:2.0.1")
+    api(kotlin("stdlib-jdk8"))
 
     implementation("org.jsoup:jsoup:1.13.1")
 
     testImplementation("io.github.manamiproject:modb-test:1.0.1")
-    implementation(kotlin("stdlib-jdk8"))
 }
 
 val compileKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = Versions.JVM_TARGET
     freeCompilerArgs = listOf("-Xinline-classes")
 }
 
 val compileTestKotlin: org.jetbrains.kotlin.gradle.tasks.KotlinCompile by tasks
 compileTestKotlin.kotlinOptions {
-    jvmTarget = "1.8"
+    jvmTarget = Versions.JVM_TARGET
 }
 
 tasks.withType<Test> {
