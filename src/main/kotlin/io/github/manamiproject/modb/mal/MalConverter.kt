@@ -52,7 +52,7 @@ class MalConverter(
         }
     }
 
-    private fun postProcessSynonyms(title: String, synonyms: List<String>): MutableList<String> {
+    private fun postProcessSynonyms(title: String, synonyms: List<String>): List<String> {
         val processedSynonyms = mutableListOf<String>()
 
         when {
@@ -118,7 +118,7 @@ class MalConverter(
         }
     }
 
-    private fun extractSynonyms(document: Document): MutableList<String> {
+    private fun extractSynonyms(document: Document): List<String> {
         return document.select("h3:containsOwn(Information)")
             .next()
             .select("tr")
@@ -127,26 +127,24 @@ class MalConverter(
             .textNodes()
             .map { it.text() }
             .filter { it.isNotBlank() }
-            .toMutableList()
     }
 
-    private fun extractSourcesEntry(document: Document): MutableList<URL> {
+    private fun extractSourcesEntry(document: Document): List<URL> {
         val text = document.select("meta[property=og:url]").attr("content").trim()
         val matchResult = Regex("/[0-9]+/").find(text)
         val rawId = matchResult?.value ?: throw IllegalStateException("Unable to extract source")
         val id = rawId.trimStart('/').trimEnd('/')
 
-        return mutableListOf(config.buildAnimeLinkUrl(id))
+        return listOf(config.buildAnimeLinkUrl(id))
     }
 
-    private fun extractRelatedAnime(document: Document): MutableList<URL> {
+    private fun extractRelatedAnime(document: Document): List<URL> {
         return document.select("h3:containsOwn(Related Anime)").next().select("table > tbody > tr")
             .filterNot { it.text().trim().startsWith("Adaptation") }
             .flatMap { it.select("a") }
             .map { it.attr("href") }
             .mapNotNull { Regex("[0-9]+").find(it)?.value }
             .map { config.buildAnimeLinkUrl(it) }
-            .toMutableList()
     }
 
     private fun extractStatus(document: Document): Status {
@@ -219,7 +217,7 @@ class MalConverter(
         return  Regex("[0-9]{4}").findAll(text).firstOrNull()?.value?.toInt() ?: 0
     }
 
-    private fun extractTags(document: Document): MutableList<String> {
+    private fun extractTags(document: Document): List<String> {
         return document.select("td:containsOwn(Genres)")
             .next()
             .select("a")
