@@ -119,7 +119,7 @@ class MalConverter(
     }
 
     private fun extractSynonyms(document: Document): List<String> {
-        return document.select("h3:containsOwn(Information)")
+        return document.select("h2:containsOwn(Information)")
             .next()
             .select("tr")
             .first()
@@ -139,7 +139,7 @@ class MalConverter(
     }
 
     private fun extractRelatedAnime(document: Document): List<URL> {
-        return document.select("h3:containsOwn(Related Anime)").next().select("table > tbody > tr")
+        return document.select("h2:containsOwn(Related Anime)").next().select("table > tbody > tr")
             .filterNot { it.text().trim().startsWith("Adaptation") }
             .flatMap { it.select("a") }
             .map { it.attr("href") }
