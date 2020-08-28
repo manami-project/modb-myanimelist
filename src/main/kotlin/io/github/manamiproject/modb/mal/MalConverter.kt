@@ -27,8 +27,8 @@ class MalConverter(
     private val config: MetaDataProviderConfig = MalConfig
 ) : AnimeConverter {
 
-    override fun convert(source: String): Anime {
-        val document = Jsoup.parse(source)
+    override fun convert(rawContent: String): Anime {
+        val document = Jsoup.parse(rawContent)
 
         val picture = extractPicture(document)
         val title = extractTitle(document)
