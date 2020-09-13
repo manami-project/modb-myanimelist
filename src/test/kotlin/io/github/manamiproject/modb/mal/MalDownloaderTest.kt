@@ -168,6 +168,54 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         }
 
         @Test
+        fun `response is 500 'internal server error' - therefore has to pause and retry to download`() {
+            // given
+            val id = 1535
+
+            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = "localhost"
+                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+            }
+
+            val responseBody = "<html><head/><body></body></html>"
+
+            serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                            .inScenario("pause and retry")
+                            .whenScenarioStateIs(STARTED)
+                            .willSetStateTo("successful retrieval")
+                            .willReturn(
+                                    aResponse()
+                                            .withHeader("Content-Type", "text/html")
+                                            .withStatus(500)
+                                            .withBody("<html></html>")
+                            )
+            )
+
+            serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                            .inScenario("pause and retry")
+                            .whenScenarioStateIs("successful retrieval")
+                            .willReturn(
+                                    aResponse()
+                                            .withHeader("Content-Type", "text/html")
+                                            .withStatus(200)
+                                            .withBody(responseBody)
+                            )
+            )
+
+            val malDownloader = MalDownloader(testMalConfig)
+
+            // when
+            val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+            // then
+            assertThat(result).isEqualTo(responseBody)
+        }
+
+        @Test
         fun `response is 504 'gateway timeout' - therefore has to pause and retry to download`() {
             // given
             val id = 1535

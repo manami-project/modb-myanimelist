@@ -49,7 +49,7 @@ class MalDownloader(
         val retryBehaviorConfig = RetryBehavior(
             waitDuration = { random(4000, 8000) },
             retryOnResponsePredicate = { httpResponse ->
-                httpResponse.code in listOf(403, 429, 504) || (httpResponse.code == 404 && httpResponse.body.contains("was not found on this server.</p>"))
+                 listOf(403, 429, 500, 504).contains(httpResponse.code) || (httpResponse.code == 404 && httpResponse.body.contains("was not found on this server.</p>"))
             }
         ).apply {
             addExecuteBeforeRetryPredicate(403) {
