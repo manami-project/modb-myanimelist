@@ -23,7 +23,7 @@ import java.net.URL
  * @since 1.0.0
  * @param config Configuration for converting data.
  */
-class MalConverter(
+public class MalConverter(
     private val config: MetaDataProviderConfig = MalConfig
 ) : AnimeConverter {
 
@@ -224,7 +224,7 @@ class MalConverter(
             .eachText()
     }
 
-    companion object {
+    private companion object {
         private val log by LoggerDelegate()
     }
 }
