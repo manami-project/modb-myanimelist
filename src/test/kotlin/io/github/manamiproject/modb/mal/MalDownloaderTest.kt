@@ -16,7 +16,7 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
-import java.net.URL
+import java.net.URI
 
 internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
 
@@ -30,8 +30,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -78,8 +78,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -126,8 +126,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -174,8 +174,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -222,8 +222,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -274,8 +274,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -307,8 +307,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -341,8 +341,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
         val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-            override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+            override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+            override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
             override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
         }
 
@@ -374,8 +374,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
         val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLinkUrl(id: AnimeId): URL = URL("http://localhost:$port/anime/$id")
-            override fun buildDataDownloadUrl(id: String): URL = buildAnimeLinkUrl(id)
+            override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+            override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
             override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
         }
 
@@ -406,8 +406,8 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
         val testAnidbConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-            override fun buildDataDownloadUrl(id: String): URL = URL("http://${hostname()}:$port/anime/$id")
+            override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+            override fun buildDataDownloadLink(id: String): URI = URI("http://${hostname()}:$port/anime/$id")
             override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
         }
 

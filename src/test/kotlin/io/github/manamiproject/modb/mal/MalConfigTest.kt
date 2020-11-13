@@ -2,7 +2,7 @@ package io.github.manamiproject.modb.mal
 
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
-import java.net.URL
+import java.net.URI
 
 internal class MalConfigTest {
 
@@ -25,27 +25,27 @@ internal class MalConfigTest {
     }
 
     @Test
-    fun `build anime link URL correctly`() {
+    fun `build anime link correctly`() {
         // given
         val id = "1535"
 
         // when
-        val result = MalConfig.buildAnimeLinkUrl(id)
+        val result = MalConfig.buildAnimeLink(id)
 
         // then
-        assertThat(result).isEqualTo(URL("https://${MalConfig.hostname()}/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://${MalConfig.hostname()}/anime/$id"))
     }
 
     @Test
-    fun `build data download URL correctly`() {
+    fun `build data download link correctly`() {
         // given
         val id = "1535"
 
         // when
-        val result = MalConfig.buildDataDownloadUrl(id)
+        val result = MalConfig.buildDataDownloadLink(id)
 
         // then
-        assertThat(result).isEqualTo(URL("https://${MalConfig.hostname()}/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://${MalConfig.hostname()}/anime/$id"))
     }
 
     @Test

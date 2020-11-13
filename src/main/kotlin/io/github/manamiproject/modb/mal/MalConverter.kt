@@ -4,18 +4,16 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
-import io.github.manamiproject.modb.core.models.Anime
+import io.github.manamiproject.modb.core.models.*
 import io.github.manamiproject.modb.core.models.Anime.Status
 import io.github.manamiproject.modb.core.models.Anime.Status.*
 import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
-import io.github.manamiproject.modb.core.models.AnimeSeason
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season
-import io.github.manamiproject.modb.core.models.Duration
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.SECONDS
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
-import java.net.URL
+import java.net.URI
 
 /**
  * Converts raw data to an [Anime].
@@ -100,25 +98,25 @@ public class MalConverter(
         }
     }
 
-    private fun extractPicture(document: Document): URL {
+    private fun extractPicture(document: Document): URI {
         val text = document.select("div[class=status-block] > div[class=icon-thumb thumbs-zoom]").attr("data-image").trim()
 
         return if (text == "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
-            URL("https://cdn.myanimelist.net/images/qm_50.gif")
+            URI("https://cdn.myanimelist.net/images/qm_50.gif")
         } else {
-            URL(text)
+            URI(text)
         }
     }
 
-    private fun findThumbnail(picture: URL): URL {
+    private fun findThumbnail(picture: URI): URI {
         return if ("https://cdn.myanimelist.net/images/qm_50.gif" != picture.toString()) {
-            URL(picture.toString().replace(".jpg", "t.jpg"))
+            URI(picture.toString().replace(".jpg", "t.jpg"))
         } else {
             picture
         }
     }
 
-    private fun extractSynonyms(document: Document): List<String> {
+    private fun extractSynonyms(document: Document): List<Title> {
         return document.select("h2:containsOwn(Information)")
             .next()
             .select("tr")
@@ -129,22 +127,22 @@ public class MalConverter(
             .filter { it.isNotBlank() }
     }
 
-    private fun extractSourcesEntry(document: Document): List<URL> {
+    private fun extractSourcesEntry(document: Document): List<URI> {
         val text = document.select("meta[property=og:url]").attr("content").trim()
         val matchResult = Regex("/[0-9]+/").find(text)
         val rawId = matchResult?.value ?: throw IllegalStateException("Unable to extract source")
         val id = rawId.trimStart('/').trimEnd('/')
 
-        return listOf(config.buildAnimeLinkUrl(id))
+        return listOf(config.buildAnimeLink(id))
     }
 
-    private fun extractRelatedAnime(document: Document): List<URL> {
+    private fun extractRelatedAnime(document: Document): List<URI> {
         return document.select("h2:containsOwn(Related Anime)").next().select("table > tbody > tr")
             .filterNot { it.text().trim().startsWith("Adaptation") }
             .flatMap { it.select("a") }
             .map { it.attr("href") }
             .mapNotNull { Regex("[0-9]+").find(it)?.value }
-            .map { config.buildAnimeLinkUrl(it) }
+            .map { config.buildAnimeLink(it) }
     }
 
     private fun extractStatus(document: Document): Status {
@@ -217,7 +215,7 @@ public class MalConverter(
         return  Regex("[0-9]{4}").findAll(text).firstOrNull()?.value?.toInt() ?: 0
     }
 
-    private fun extractTags(document: Document): List<String> {
+    private fun extractTags(document: Document): List<Tag> {
         return document.select("td:containsOwn(Genres)")
             .next()
             .select("a")

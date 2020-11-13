@@ -12,7 +12,7 @@ import io.github.manamiproject.modb.test.loadTestResource
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import java.net.URL
+import java.net.URI
 
 internal class MalConverterTest {
 
@@ -23,8 +23,8 @@ internal class MalConverterTest {
         fun `title containing special chars`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -43,8 +43,8 @@ internal class MalConverterTest {
         fun `anime has original and english title in header`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -67,8 +67,8 @@ internal class MalConverterTest {
         fun `type is TV`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -87,8 +87,8 @@ internal class MalConverterTest {
         fun `'Unknown' is mapped to 'TV'`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -107,8 +107,8 @@ internal class MalConverterTest {
         fun `type is Movie`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -127,8 +127,8 @@ internal class MalConverterTest {
         fun `type is music is mapped to special`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -147,8 +147,8 @@ internal class MalConverterTest {
         fun `type is ONA`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -167,8 +167,8 @@ internal class MalConverterTest {
         fun `type is OVA`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -187,8 +187,8 @@ internal class MalConverterTest {
         fun `type is Special`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -207,8 +207,8 @@ internal class MalConverterTest {
         fun `movie case which resulted in containsOwn`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -231,8 +231,8 @@ internal class MalConverterTest {
         fun `unknown number of episodes`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -251,8 +251,8 @@ internal class MalConverterTest {
         fun `1 episode`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -271,8 +271,8 @@ internal class MalConverterTest {
         fun `10 episodes`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -291,8 +291,8 @@ internal class MalConverterTest {
         fun `100 episodes`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -311,8 +311,8 @@ internal class MalConverterTest {
         fun `1818 episodes`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -335,8 +335,8 @@ internal class MalConverterTest {
         fun `neither picture nor thumbnail`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -348,16 +348,16 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.picture).isEqualTo(URL("https://cdn.myanimelist.net/images/qm_50.gif"))
-            assertThat(result.thumbnail).isEqualTo(URL("https://cdn.myanimelist.net/images/qm_50.gif"))
+            assertThat(result.picture).isEqualTo(URI("https://cdn.myanimelist.net/images/qm_50.gif"))
+            assertThat(result.thumbnail).isEqualTo(URI("https://cdn.myanimelist.net/images/qm_50.gif"))
         }
 
         @Test
         fun `picture and thumbnail`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -369,8 +369,8 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.picture).isEqualTo(URL("https://cdn.myanimelist.net/images/anime/5/50551.jpg"))
-            assertThat(result.thumbnail).isEqualTo(URL("https://cdn.myanimelist.net/images/anime/5/50551t.jpg"))
+            assertThat(result.picture).isEqualTo(URI("https://cdn.myanimelist.net/images/anime/5/50551.jpg"))
+            assertThat(result.thumbnail).isEqualTo(URI("https://cdn.myanimelist.net/images/anime/5/50551t.jpg"))
         }
     }
 
@@ -381,8 +381,8 @@ internal class MalConverterTest {
         fun `no synonyms`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -401,8 +401,8 @@ internal class MalConverterTest {
         fun `one synonym`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -421,8 +421,8 @@ internal class MalConverterTest {
         fun `multiple languages, one synonym each`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -445,8 +445,8 @@ internal class MalConverterTest {
         fun `synonym containing comma`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -469,8 +469,8 @@ internal class MalConverterTest {
         fun `multiple synonyms for one language`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -496,7 +496,7 @@ internal class MalConverterTest {
         fun `multiple synonyms with comma in one language section`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -522,7 +522,7 @@ internal class MalConverterTest {
         fun `one synonym with multiple commas`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -545,7 +545,7 @@ internal class MalConverterTest {
         fun `semicolon in synonym wihtout whitespaces`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -569,7 +569,7 @@ internal class MalConverterTest {
         fun `semicolon in synonym with whitespace`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -590,7 +590,7 @@ internal class MalConverterTest {
         fun `semicolon in title but not in synonyms`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -618,8 +618,8 @@ internal class MalConverterTest {
         fun `extract id 16498`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -631,7 +631,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.sources).containsExactly(URL("https://myanimelist.net/anime/16498"))
+            assertThat(result.sources).containsExactly(URI("https://myanimelist.net/anime/16498"))
         }
     }
 
@@ -642,8 +642,8 @@ internal class MalConverterTest {
         fun `no adaption, no relations`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -662,8 +662,8 @@ internal class MalConverterTest {
         fun `no adaption, multiple relations`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -676,11 +676,11 @@ internal class MalConverterTest {
 
             // then
             assertThat(result.relatedAnime).containsExactly(
-                URL("https://myanimelist.net/anime/17819"),
-                URL("https://myanimelist.net/anime/19671"),
-                URL("https://myanimelist.net/anime/22265"),
-                URL("https://myanimelist.net/anime/30415"),
-                URL("https://myanimelist.net/anime/33845")
+                URI("https://myanimelist.net/anime/17819"),
+                URI("https://myanimelist.net/anime/19671"),
+                URI("https://myanimelist.net/anime/22265"),
+                URI("https://myanimelist.net/anime/30415"),
+                URI("https://myanimelist.net/anime/33845")
             )
         }
 
@@ -688,8 +688,8 @@ internal class MalConverterTest {
         fun `one adaption, one relation`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -702,7 +702,7 @@ internal class MalConverterTest {
 
             // then
             assertThat(result.relatedAnime).containsExactly(
-                URL("https://myanimelist.net/anime/14367")
+                URI("https://myanimelist.net/anime/14367")
             )
         }
 
@@ -710,8 +710,8 @@ internal class MalConverterTest {
         fun `has adaption, multiple relations`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -724,21 +724,21 @@ internal class MalConverterTest {
 
             // then
             assertThat(result.relatedAnime).containsExactly(
-                URL("https://myanimelist.net/anime/12685"),
-                URL("https://myanimelist.net/anime/15197"),
-                URL("https://myanimelist.net/anime/15199"),
-                URL("https://myanimelist.net/anime/15201"),
-                URL("https://myanimelist.net/anime/17277"),
-                URL("https://myanimelist.net/anime/1953"),
-                URL("https://myanimelist.net/anime/2124"),
-                URL("https://myanimelist.net/anime/2904"),
-                URL("https://myanimelist.net/anime/30711"),
-                URL("https://myanimelist.net/anime/33155"),
-                URL("https://myanimelist.net/anime/34438"),
-                URL("https://myanimelist.net/anime/34439"),
-                URL("https://myanimelist.net/anime/40334"),
-                URL("https://myanimelist.net/anime/4596"),
-                URL("https://myanimelist.net/anime/8888")
+                URI("https://myanimelist.net/anime/12685"),
+                URI("https://myanimelist.net/anime/15197"),
+                URI("https://myanimelist.net/anime/15199"),
+                URI("https://myanimelist.net/anime/15201"),
+                URI("https://myanimelist.net/anime/17277"),
+                URI("https://myanimelist.net/anime/1953"),
+                URI("https://myanimelist.net/anime/2124"),
+                URI("https://myanimelist.net/anime/2904"),
+                URI("https://myanimelist.net/anime/30711"),
+                URI("https://myanimelist.net/anime/33155"),
+                URI("https://myanimelist.net/anime/34438"),
+                URI("https://myanimelist.net/anime/34439"),
+                URI("https://myanimelist.net/anime/40334"),
+                URI("https://myanimelist.net/anime/4596"),
+                URI("https://myanimelist.net/anime/8888")
             )
         }
 
@@ -746,8 +746,8 @@ internal class MalConverterTest {
         fun `has adaption, no relations`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -770,8 +770,8 @@ internal class MalConverterTest {
         fun `'currently airing' is mapped to 'CURRENTLY_AIRING'`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -790,8 +790,8 @@ internal class MalConverterTest {
         fun `'Not yet aired' is mapped to 'NOT_YET_AIRED'`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -810,8 +810,8 @@ internal class MalConverterTest {
         fun `'Finished Airing' is mapped to 'FINISHED_AIRING'`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -834,8 +834,8 @@ internal class MalConverterTest {
         fun `extract multiple tags`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -863,8 +863,8 @@ internal class MalConverterTest {
         fun `extract exactly one tag`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -883,8 +883,8 @@ internal class MalConverterTest {
         fun `no tags available`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -907,8 +907,8 @@ internal class MalConverterTest {
         fun `1 hr`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -927,8 +927,8 @@ internal class MalConverterTest {
         fun `1 hr 11 min`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -947,8 +947,8 @@ internal class MalConverterTest {
         fun `1 hr 11 min per ep`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -967,8 +967,8 @@ internal class MalConverterTest {
         fun `2 hr`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -987,8 +987,8 @@ internal class MalConverterTest {
         fun `2 hr 15 min`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1007,8 +1007,8 @@ internal class MalConverterTest {
         fun `10 min`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1027,8 +1027,8 @@ internal class MalConverterTest {
         fun `10 min per ep`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1047,8 +1047,8 @@ internal class MalConverterTest {
         fun `10 sec`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1067,8 +1067,8 @@ internal class MalConverterTest {
         fun `10 sec per ep`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1087,8 +1087,8 @@ internal class MalConverterTest {
         fun `unknown duration`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                 override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
             }
 
@@ -1114,8 +1114,8 @@ internal class MalConverterTest {
             fun `'UNDEFINED', because anime season link is not available`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1134,8 +1134,8 @@ internal class MalConverterTest {
             fun `season is 'FALL'`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1154,8 +1154,8 @@ internal class MalConverterTest {
             fun `season is 'SPRING'`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1174,8 +1174,8 @@ internal class MalConverterTest {
             fun `season is 'SUMMER'`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1194,8 +1194,8 @@ internal class MalConverterTest {
             fun `season is 'WINTER'`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1218,8 +1218,8 @@ internal class MalConverterTest {
             fun `extract from anime season link which exists in mobile version, but not on desktop version`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1238,8 +1238,8 @@ internal class MalConverterTest {
             fun `extract from anime season link which exists on both mobile and desktop version`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1258,8 +1258,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - '2012-07-30 - unknown`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1278,8 +1278,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2018-10-10 - 2018-12-20`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1298,8 +1298,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2019-02-21`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1318,8 +1318,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 1982-10-09 - 1983`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1338,8 +1338,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 1992-10 - 1993`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1358,8 +1358,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2018-09 - unknown`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1378,8 +1378,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2002`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1398,8 +1398,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2008-08 - 2008`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1418,8 +1418,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 1964 - 1965`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1438,8 +1438,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2011-04 - 2011-05`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1458,8 +1458,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2010 - 2010-03`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1478,8 +1478,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 1999 - 2000-05-22`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1498,8 +1498,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2013-01`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1518,8 +1518,8 @@ internal class MalConverterTest {
             fun `extract from 'aired', because anime season is not set - 2021 - unknown`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
@@ -1538,8 +1538,8 @@ internal class MalConverterTest {
             fun `neither anime season nor 'aired' is available`() {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLinkUrl(id: AnimeId): URL = MalConfig.buildAnimeLinkUrl(id)
-                    override fun buildDataDownloadUrl(id: String): URL = MalConfig.buildDataDownloadUrl(id)
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 

@@ -31,7 +31,7 @@ public class MalDownloader(
         log.debug("Downloading [malId={}]", id)
 
         val response = httpClient.get(
-            url = config.buildDataDownloadUrl(id),
+            url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf(USER_AGENT to listOf(MOBILE_USER_AGENT)),
             retryWith = config.hostname()
         )
