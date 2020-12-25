@@ -206,7 +206,7 @@ public class MalConverter(
 
         return AnimeSeason(
             season = season,
-            _year = year
+            year = year
         )
     }
 
