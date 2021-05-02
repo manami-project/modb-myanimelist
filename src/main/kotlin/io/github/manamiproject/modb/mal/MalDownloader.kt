@@ -5,8 +5,10 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
 import io.github.manamiproject.modb.core.excludeFromTestContext
 import io.github.manamiproject.modb.core.extensions.EMPTY
-import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
-import io.github.manamiproject.modb.core.httpclient.HttpClient
+import io.github.manamiproject.modb.core.extensions.pickRandom
+import io.github.manamiproject.modb.core.httpclient.*
+import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
+import io.github.manamiproject.modb.core.httpclient.BrowserType.MOBILE
 import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
@@ -32,7 +34,7 @@ public class MalDownloader(
 
         val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
-            headers = mapOf(USER_AGENT to listOf(MOBILE_USER_AGENT)),
+            headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
             retryWith = config.hostname()
         )
 
@@ -77,6 +79,5 @@ public class MalDownloader(
     private companion object {
         private val log by LoggerDelegate()
         private const val USER_AGENT = "User-Agent"
-        private const val MOBILE_USER_AGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 11_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) FxiOS/30.0 Mobile/15E148 Safari/605.1.15"
     }
 }
