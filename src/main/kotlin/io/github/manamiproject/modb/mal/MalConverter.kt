@@ -164,7 +164,7 @@ public class MalConverter(
             .toList()
             .map { it.value }
             .map { it.trim() }
-            .map { it.toLowerCase() }
+            .map { it.lowercase() }
 
         if (values.count() != units.count()) {
             log.warn("The amount of values [{}] does not match the amount of units [{}].", values.count(), units.count())
