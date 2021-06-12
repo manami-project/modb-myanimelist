@@ -404,7 +404,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         // given
         val id = 1535
 
-        val testAnidbConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+        val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
             override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
             override fun buildDataDownloadLink(id: String): URI = URI("http://${hostname()}:$port/anime/$id")
@@ -420,7 +420,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             )
         )
 
-        val downloader = MalDownloader(testAnidbConfig)
+        val downloader = MalDownloader(testMalConfig)
 
         // when
         val result = assertThrows<IllegalStateException> {

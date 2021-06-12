@@ -33,7 +33,7 @@ internal class MalConfigTest {
         val result = MalConfig.buildAnimeLink(id)
 
         // then
-        assertThat(result).isEqualTo(URI("https://${MalConfig.hostname()}/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://myanimelist.net/anime/$id"))
     }
 
     @Test
@@ -45,7 +45,7 @@ internal class MalConfigTest {
         val result = MalConfig.buildDataDownloadLink(id)
 
         // then
-        assertThat(result).isEqualTo(URI("https://${MalConfig.hostname()}/anime/$id"))
+        assertThat(result).isEqualTo(URI("https://myanimelist.net/anime/$id"))
     }
 
     @Test
