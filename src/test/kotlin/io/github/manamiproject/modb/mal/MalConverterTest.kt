@@ -3,6 +3,7 @@ package io.github.manamiproject.modb.mal
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.FileSuffix
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
+import io.github.manamiproject.modb.core.models.Anime
 import io.github.manamiproject.modb.core.models.Anime.Status.*
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season.*
@@ -84,7 +85,7 @@ internal class MalConverterTest {
         }
 
         @Test
-        fun `'Unknown' is mapped to 'TV'`() {
+        fun `'Unknown' is mapped to 'UNKNOWN'`() {
             // given
             val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
@@ -100,7 +101,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.type).isEqualTo(TV)
+            assertThat(result.type).isEqualTo(Anime.Type.UNKNOWN)
         }
 
         @Test
@@ -120,7 +121,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.type).isEqualTo(Movie)
+            assertThat(result.type).isEqualTo(MOVIE)
         }
 
         @Test
@@ -140,7 +141,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.type).isEqualTo(Special)
+            assertThat(result.type).isEqualTo(SPECIAL)
         }
 
         @Test
@@ -200,7 +201,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.type).isEqualTo(Special)
+            assertThat(result.type).isEqualTo(SPECIAL)
         }
 
         @Test
@@ -220,7 +221,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.type).isEqualTo(Movie)
+            assertThat(result.type).isEqualTo(MOVIE)
         }
     }
 
@@ -783,7 +784,7 @@ internal class MalConverterTest {
             val result = converter.convert(testFile)
 
             // then
-            assertThat(result.status).isEqualTo(CURRENTLY)
+            assertThat(result.status).isEqualTo(ONGOING)
         }
 
         @Test
