@@ -118,7 +118,7 @@ public class MalConverter(
         return document.select("h2:containsOwn(Information)")
             .next()
             .select("tr")
-            .first()
+            .first()!!
             .select("td")[1]
             .textNodes()
             .map { it.text() }
