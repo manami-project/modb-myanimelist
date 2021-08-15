@@ -738,8 +738,10 @@ internal class MalConverterTest {
                 URI("https://myanimelist.net/anime/34438"),
                 URI("https://myanimelist.net/anime/34439"),
                 URI("https://myanimelist.net/anime/40334"),
+                URI("https://myanimelist.net/anime/40836"),
+                URI("https://myanimelist.net/anime/41075"),
                 URI("https://myanimelist.net/anime/4596"),
-                URI("https://myanimelist.net/anime/8888")
+                URI("https://myanimelist.net/anime/8888"),
             )
         }
 
