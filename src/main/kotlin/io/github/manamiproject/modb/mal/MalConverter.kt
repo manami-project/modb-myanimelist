@@ -165,7 +165,7 @@ public class MalConverter(
             .map { it.lowercase() }
 
         if (values.count() != units.count()) {
-            log.warn("The amount of values [{}] does not match the amount of units [{}].", values.count(), units.count())
+            log.warn { "The amount of values [${values.count()}] does not match the amount of units [${units.count()}]." }
             return Duration(0, SECONDS)
         }
 

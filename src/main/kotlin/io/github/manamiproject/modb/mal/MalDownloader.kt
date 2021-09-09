@@ -30,7 +30,7 @@ public class MalDownloader(
     }
 
     override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String {
-        log.debug("Downloading [malId={}]", id)
+        log.debug { "Downloading [malId=$id]" }
 
         val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
@@ -55,11 +55,11 @@ public class MalDownloader(
             }
         ).apply {
             addExecuteBeforeRetryPredicate(403) {
-                log.info("Crawler has been detected. Pausing for at least 5-8 minutes.")
+                log.info { "Crawler has been detected. Pausing for at least 5-8 minutes." }
                 excludeFromTestContext(config) { Thread.sleep(random(296000, 400000)) }
             }
             addExecuteBeforeRetryPredicate(404) {
-                log.info("Pausing before redownloading 404 candidate.")
+                log.info { "Pausing before redownloading 404 candidate." }
             }
         }
 
