@@ -13,6 +13,7 @@ import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.random
+import java.lang.Thread.*
 
 /**
  * Downloads anime data from myanimelist.net
@@ -55,8 +56,8 @@ public class MalDownloader(
             }
         ).apply {
             addExecuteBeforeRetryPredicate(403) {
-                log.info { "Crawler has been detected. Pausing for at least 5-8 minutes." }
-                excludeFromTestContext(config) { Thread.sleep(random(296000, 400000)) }
+                log.info { "Crawler has been detected. Pausing for at least 5-6 minutes." }
+                excludeFromTestContext(config) { sleep(random(296000, 360000)) }
             }
             addExecuteBeforeRetryPredicate(404) {
                 log.info { "Pausing before redownloading 404 candidate." }
