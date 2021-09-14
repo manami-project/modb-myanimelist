@@ -56,8 +56,8 @@ public class MalDownloader(
             }
         ).apply {
             addExecuteBeforeRetryPredicate(403) {
-                log.info { "Crawler has been detected. Pausing for at least 5-6 minutes." }
-                excludeFromTestContext(config) { sleep(random(296000, 360000)) }
+                log.info { "Crawler has been detected. Pausing for at least 6 minutes." }
+                excludeFromTestContext(config) { sleep(random(360000, 390000)) }
             }
             addExecuteBeforeRetryPredicate(404) {
                 log.info { "Pausing before redownloading 404 candidate." }
