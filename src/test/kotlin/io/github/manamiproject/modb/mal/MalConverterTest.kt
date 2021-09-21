@@ -856,7 +856,6 @@ internal class MalConverterTest {
                 "comedy",
                 "drama",
                 "fantasy",
-                "magic",
                 "military",
                 "shounen"
             )

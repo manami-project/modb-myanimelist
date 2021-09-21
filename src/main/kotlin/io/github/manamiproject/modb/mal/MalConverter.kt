@@ -214,9 +214,7 @@ public class MalConverter(
     }
 
     private fun extractTags(document: Document): List<Tag> {
-        return document.select("td:containsOwn(Genres)")
-            .next()
-            .select("a")
+        return document.select("span[itemprop=genre]")
             .eachText()
     }
 
