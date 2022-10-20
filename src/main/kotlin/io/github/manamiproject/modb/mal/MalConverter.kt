@@ -11,6 +11,9 @@ import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.SECONDS
+import kotlinx.coroutines.Dispatchers.Default
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import java.net.URI
@@ -25,7 +28,12 @@ public class MalConverter(
     private val config: MetaDataProviderConfig = MalConfig
 ) : AnimeConverter {
 
-    override fun convert(rawContent: String): Anime {
+    @Deprecated("Use coroutines",
+        ReplaceWith("runBlocking { convertSuspendable(rawContent) }", "kotlinx.coroutines.runBlocking")
+    )
+    override fun convert(rawContent: String): Anime = runBlocking { convertSuspendable(rawContent) }
+
+    override suspend fun convertSuspendable(rawContent: String): Anime = withContext(Default) {
         val document = Jsoup.parse(rawContent)
 
         val picture = extractPicture(document)
@@ -33,7 +41,7 @@ public class MalConverter(
 
         val synonyms = postProcessSynonyms(title, extractSynonyms(document))
 
-        return Anime(
+        return@withContext Anime(
             _title = title,
             episodes = extractEpisodes(document),
             type = extractType(document),
