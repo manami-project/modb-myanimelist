@@ -6,14 +6,19 @@ import io.github.manamiproject.modb.core.downloader.Downloader
 import io.github.manamiproject.modb.core.excludeFromTestContext
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.pickRandom
-import io.github.manamiproject.modb.core.httpclient.*
 import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
 import io.github.manamiproject.modb.core.httpclient.BrowserType.MOBILE
+import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
+import io.github.manamiproject.modb.core.httpclient.HttpClient
+import io.github.manamiproject.modb.core.httpclient.UserAgents
 import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.random
-import java.lang.Thread.*
+import kotlinx.coroutines.runBlocking
+import java.lang.Thread.sleep
+import kotlin.time.DurationUnit.MILLISECONDS
+import kotlin.time.toDuration
 
 /**
  * Downloads anime data from myanimelist.net
@@ -30,13 +35,18 @@ public class MalDownloader(
         registerRetryBehavior()
     }
 
-    override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String {
+    @Deprecated("Use coroutines",
+        ReplaceWith("runBlocking { downloadSuspendable(id, onDeadEntry) }", "kotlinx.coroutines.runBlocking")
+    )
+    override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String = runBlocking { downloadSuspendable(id, onDeadEntry) }
+
+    override suspend fun downloadSuspendable(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String {
         log.debug { "Downloading [malId=$id]" }
 
-        val response = httpClient.get(
+        val response = httpClient.getSuspedable(
             url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
-            retryWith = config.hostname()
+            retryWith = config.hostname(),
         )
 
         check(response.body.isNotBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
@@ -49,22 +59,26 @@ public class MalDownloader(
     }
 
     private fun registerRetryBehavior() {
-        val retryBehaviorConfig = RetryBehavior(
-            waitDuration = { random(4000, 8000) },
-            retryOnResponsePredicate = { httpResponse ->
-                 listOf(403, 429, 500, 504).contains(httpResponse.code) || (httpResponse.code == 404 && httpResponse.body.contains("was not found on this server.</p>"))
-            }
+        val retryBehavior = RetryBehavior(
+            waitDuration = { random(4000, 8000).toDuration(MILLISECONDS) },
         ).apply {
-            addExecuteBeforeRetryPredicate(403) {
-                log.info { "Crawler has been detected. Pausing for at least 6 minutes." }
-                excludeFromTestContext(config) { sleep(random(360000, 390000)) }
+            addCase {
+                it.code in setOf(429, 500, 504)
             }
-            addExecuteBeforeRetryPredicate(404) {
-                log.info { "Pausing before redownloading 404 candidate." }
-            }
+            addCase(
+                retryIf = { httpResponse -> httpResponse.code == 403 },
+                executeBeforeRetry = {
+                    log.info { "Crawler has been detected. Pausing for at least 6 minutes." }
+                    excludeFromTestContext(config) { sleep(random(360000, 390000)) }
+                }
+            )
+            addCase(
+                retryIf = { httpResponse -> httpResponse.code == 404 && httpResponse.body.contains("was not found on this server.</p>") },
+                executeBeforeRetry = { log.info { "Pausing before redownloading 404 candidate." } }
+            )
         }
 
-        RetryableRegistry.register(config.hostname(), retryBehaviorConfig)
+        RetryableRegistry.register(config.hostname(), retryBehavior)
     }
 
     private fun checkDeadEntry(malId: AnimeId, onDeadEntry: (AnimeId) -> Unit, responseBody: String): String {
