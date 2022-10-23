@@ -61,6 +61,7 @@ public class MalDownloader(
     private fun registerRetryBehavior() {
         val retryBehavior = RetryBehavior(
             waitDuration = { random(4000, 8000).toDuration(MILLISECONDS) },
+            isTestContext = config.isTestContext(),
         ).apply {
             addCase {
                 it.code in setOf(429, 500, 504)
