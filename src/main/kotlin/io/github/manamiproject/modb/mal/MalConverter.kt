@@ -2,6 +2,7 @@ package io.github.manamiproject.modb.mal
 
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
+import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.models.*
@@ -11,7 +12,6 @@ import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.SECONDS
-import kotlinx.coroutines.Dispatchers.Default
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import org.jsoup.Jsoup
@@ -33,7 +33,7 @@ public class MalConverter(
     )
     override fun convert(rawContent: String): Anime = runBlocking { convertSuspendable(rawContent) }
 
-    override suspend fun convertSuspendable(rawContent: String): Anime = withContext(Default) {
+    override suspend fun convertSuspendable(rawContent: String): Anime = withContext(LIMITED_CPU) {
         val document = Jsoup.parse(rawContent)
 
         val picture = extractPicture(document)
