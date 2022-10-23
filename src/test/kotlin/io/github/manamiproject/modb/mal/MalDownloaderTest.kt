@@ -17,7 +17,6 @@ import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 import java.net.URI
 
 internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
