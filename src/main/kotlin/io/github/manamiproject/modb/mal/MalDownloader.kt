@@ -35,12 +35,10 @@ public class MalDownloader(
         registerRetryBehavior()
     }
 
-    @Deprecated("Use coroutines",
-        ReplaceWith("runBlocking { downloadSuspendable(id, onDeadEntry) }", "kotlinx.coroutines.runBlocking")
-    )
+    @Deprecated("Use coroutines", ReplaceWith(EMPTY))
     override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String = runBlocking { downloadSuspendable(id, onDeadEntry) }
 
-    override suspend fun downloadSuspendable(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String {
+    override suspend fun downloadSuspendable(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
         log.debug { "Downloading [malId=$id]" }
 
         val response = httpClient.getSuspedable(
@@ -82,7 +80,7 @@ public class MalDownloader(
         RetryableRegistry.register(config.hostname(), retryBehavior)
     }
 
-    private fun checkDeadEntry(malId: AnimeId, onDeadEntry: (AnimeId) -> Unit, responseBody: String): String {
+    private suspend fun checkDeadEntry(malId: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit, responseBody: String): String {
         return when {
             responseBody.contains("<title>404 Not Found - MyAnimeList.net") -> {
                 onDeadEntry.invoke(malId)
