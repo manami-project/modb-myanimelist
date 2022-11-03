@@ -15,7 +15,6 @@ import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.random
-import kotlinx.coroutines.runBlocking
 import java.lang.Thread.sleep
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.toDuration
@@ -35,13 +34,10 @@ public class MalDownloader(
         registerRetryBehavior()
     }
 
-    @Deprecated("Use coroutines", ReplaceWith(EMPTY))
-    override fun download(id: AnimeId, onDeadEntry: (AnimeId) -> Unit): String = runBlocking { downloadSuspendable(id, onDeadEntry) }
-
-    override suspend fun downloadSuspendable(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
+    override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
         log.debug { "Downloading [malId=$id]" }
 
-        val response = httpClient.getSuspedable(
+        val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
             retryWith = config.hostname(),

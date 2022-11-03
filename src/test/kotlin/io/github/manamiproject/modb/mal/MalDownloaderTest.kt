@@ -66,7 +66,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val malDownloader = MalDownloader(testMalConfig)
 
             // when
-            val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -114,7 +114,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val malDownloader = MalDownloader(testMalConfig)
 
             // when
-            val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -162,7 +162,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val malDownloader = MalDownloader(testMalConfig)
 
             // when
-            val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -210,7 +210,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val malDownloader = MalDownloader(testMalConfig)
 
             // when
-            val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -258,7 +258,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val malDownloader = MalDownloader(testMalConfig)
 
             // when
-            val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -294,7 +294,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             // when
             val result = exceptionExpected<IllegalStateException> {
-                malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
             }
 
             // then
@@ -327,7 +327,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
             // when
             val result = exceptionExpected<IllegalStateException> {
-                malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
             }
 
             // then
@@ -361,7 +361,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         val malDownloader = MalDownloader(testMalConfig)
 
         // when
-        val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+        val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
 
         // then
         assertThat(result).isEqualTo(responseBody)
@@ -393,7 +393,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         val malDownloader = MalDownloader(testMalConfig)
 
         // when
-        val result = runBlocking { malDownloader.downloadSuspendable(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true }) }
+        val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true }) }
 
         // then
         assertThat(hasDeadEntryBeenInvoked).isTrue()
@@ -425,7 +425,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
         // when
         val result = exceptionExpected<IllegalStateException> {
-            downloader.downloadSuspendable(id.toAnimeId()) { shouldNotBeInvoked() }
+            downloader.download(id.toAnimeId()) { shouldNotBeInvoked() }
         }
 
         // then

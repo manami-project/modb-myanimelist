@@ -35,7 +35,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.title).isEqualTo("Tobidasu PriPara: Mi~nna de Mezase! Idol☆Grand Prix")
@@ -55,7 +55,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.title).isEqualTo("Rurouni Kenshin: Meiji Kenkaku Romantan")
@@ -79,7 +79,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(TV)
@@ -99,7 +99,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(Anime.Type.UNKNOWN)
@@ -119,7 +119,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(MOVIE)
@@ -139,7 +139,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -159,7 +159,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(ONA)
@@ -179,7 +179,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(OVA)
@@ -199,7 +199,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(SPECIAL)
@@ -219,7 +219,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.type).isEqualTo(MOVIE)
@@ -243,7 +243,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.episodes).isEqualTo(0)
@@ -263,7 +263,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.episodes).isOne()
@@ -283,7 +283,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.episodes).isEqualTo(10)
@@ -303,7 +303,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.episodes).isEqualTo(100)
@@ -323,7 +323,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.episodes).isEqualTo(1818)
@@ -347,7 +347,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.picture).isEqualTo(URI("https://cdn.myanimelist.net/images/qm_50.gif"))
@@ -368,7 +368,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.picture).isEqualTo(URI("https://cdn.myanimelist.net/images/anime/5/50551.jpg"))
@@ -393,7 +393,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).isEmpty()
@@ -413,7 +413,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly("エスパー魔美スペシャル マイエンジェル魔美ちゃん")
@@ -433,7 +433,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -457,7 +457,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -481,7 +481,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -507,7 +507,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -533,7 +533,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -556,7 +556,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -580,7 +580,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -601,7 +601,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.synonyms).containsExactly(
@@ -630,7 +630,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.sources).containsExactly(URI("https://myanimelist.net/anime/16498"))
@@ -654,7 +654,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.relatedAnime).isEmpty()
@@ -674,7 +674,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.relatedAnime).containsExactly(
@@ -700,7 +700,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.relatedAnime).containsExactly(
@@ -722,7 +722,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.relatedAnime).containsExactly(
@@ -760,7 +760,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.relatedAnime).isEmpty()
@@ -784,7 +784,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.status).isEqualTo(ONGOING)
@@ -804,7 +804,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.status).isEqualTo(UPCOMING)
@@ -824,7 +824,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.status).isEqualTo(FINISHED)
@@ -848,7 +848,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.tags).containsExactly(
@@ -876,7 +876,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.tags).containsExactly("fantasy")
@@ -896,7 +896,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.tags).isEmpty()
@@ -920,7 +920,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(1, HOURS))
@@ -940,7 +940,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(71, MINUTES))
@@ -960,7 +960,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(71, MINUTES))
@@ -980,7 +980,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(2, HOURS))
@@ -1000,7 +1000,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(135, MINUTES))
@@ -1020,7 +1020,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(10, MINUTES))
@@ -1040,7 +1040,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(10, MINUTES))
@@ -1060,7 +1060,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(10, SECONDS))
@@ -1080,7 +1080,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(10, SECONDS))
@@ -1100,7 +1100,7 @@ internal class MalConverterTest {
             val converter = MalConverter(testMalConfig)
 
             // when
-            val result = runBlocking { converter.convertSuspendable(testFile) }
+            val result = runBlocking { converter.convert(testFile) }
 
             // then
             assertThat(result.duration).isEqualTo(Duration(0, SECONDS))
@@ -1127,7 +1127,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.season).isEqualTo(UNDEFINED)
@@ -1147,7 +1147,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.season).isEqualTo(FALL)
@@ -1167,7 +1167,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.season).isEqualTo(SPRING)
@@ -1187,7 +1187,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.season).isEqualTo(SUMMER)
@@ -1207,7 +1207,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.season).isEqualTo(WINTER)
@@ -1231,7 +1231,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2010)
@@ -1251,7 +1251,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2020)
@@ -1271,7 +1271,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2012)
@@ -1291,7 +1291,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2018)
@@ -1311,7 +1311,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2019)
@@ -1331,7 +1331,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(1982)
@@ -1351,7 +1351,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(1992)
@@ -1371,7 +1371,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2018)
@@ -1391,7 +1391,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2002)
@@ -1411,7 +1411,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2008)
@@ -1431,7 +1431,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(1964)
@@ -1451,7 +1451,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2011)
@@ -1471,7 +1471,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2010)
@@ -1491,7 +1491,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(1999)
@@ -1511,7 +1511,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2013)
@@ -1531,7 +1531,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(2021)
@@ -1551,7 +1551,7 @@ internal class MalConverterTest {
                 val converter = MalConverter(testMalConfig)
 
                 // when
-                val result = runBlocking { converter.convertSuspendable(testFile) }
+                val result = runBlocking { converter.convert(testFile) }
 
                 // then
                 assertThat(result.animeSeason.year).isEqualTo(0)
