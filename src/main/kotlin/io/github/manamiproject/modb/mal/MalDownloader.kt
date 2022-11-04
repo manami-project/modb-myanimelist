@@ -3,7 +3,7 @@ package io.github.manamiproject.modb.mal
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
-import io.github.manamiproject.modb.core.excludeFromTestContext
+import io.github.manamiproject.modb.core.excludeFromTestContextSuspendable
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.pickRandom
 import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
@@ -15,7 +15,8 @@ import io.github.manamiproject.modb.core.httpclient.retry.RetryBehavior
 import io.github.manamiproject.modb.core.httpclient.retry.RetryableRegistry
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.random
-import java.lang.Thread.sleep
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlin.time.DurationUnit.MILLISECONDS
 import kotlin.time.toDuration
 
@@ -31,7 +32,9 @@ public class MalDownloader(
 ) : Downloader {
 
     init {
-        registerRetryBehavior()
+        runBlocking {
+            registerRetryBehavior()
+        }
     }
 
     override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
@@ -52,7 +55,7 @@ public class MalDownloader(
         }
     }
 
-    private fun registerRetryBehavior() {
+    private suspend fun registerRetryBehavior() {
         val retryBehavior = RetryBehavior(
             waitDuration = { random(4000, 8000).toDuration(MILLISECONDS) },
             isTestContext = config.isTestContext(),
@@ -64,7 +67,7 @@ public class MalDownloader(
                 retryIf = { httpResponse -> httpResponse.code == 403 },
                 executeBeforeRetry = {
                     log.info { "Crawler has been detected. Pausing for at least 6 minutes." }
-                    excludeFromTestContext(config) { sleep(random(360000, 390000)) }
+                    excludeFromTestContextSuspendable(config) { delay(random(360000, 390000)) }
                 }
             )
             addCase(
