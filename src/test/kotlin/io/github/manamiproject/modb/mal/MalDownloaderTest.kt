@@ -16,7 +16,7 @@ import io.github.manamiproject.modb.test.shouldNotBeInvoked
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
-import org.junit.jupiter.api.Test
+import kotlin.test.Test
 import java.net.URI
 
 internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
@@ -26,242 +26,252 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
         @Test
         fun `response is 403 which indicates that a crawler has been detected - therefore pause and retry`() {
-            // given
-            val id = 1535
+            runBlocking {
+                // given
+                val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun hostname(): Hostname = "localhost"
+                    override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                    override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val responseBody = "<html><head/><body>Data</body></html>"
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(403)
+                                .withBody("<html></html>")
+                        )
+                )
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(200)
+                                .withBody(responseBody)
+                        )
+                )
+
+                val malDownloader = MalDownloader(testMalConfig)
+
+                // when
+                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+                // then
+                assertThat(result).isEqualTo(responseBody)
             }
-
-            val responseBody = "<html><head/><body>Data</body></html>"
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs(STARTED)
-                    .willSetStateTo("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(403)
-                            .withBody("<html></html>")
-                    )
-            )
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(200)
-                            .withBody(responseBody)
-                    )
-            )
-
-            val malDownloader = MalDownloader(testMalConfig)
-
-            // when
-            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
-
-            // then
-            assertThat(result).isEqualTo(responseBody)
         }
 
         @Test
         fun `falsely returning 404 - therefore pause and retry - successfully retrieve anime after retry`() {
-            // given
-            val id = 1535
+            runBlocking {
+                // given
+                val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun hostname(): Hostname = "localhost"
+                    override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                    override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val responseBody = "<html><head/><body></body></html>"
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(404)
+                                .withBody("<html><head><title>404 Not Found - MyAnimeList.net</title><body><p>Death Note was not found on this server.</p></body></html>")
+                        )
+                )
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(200)
+                                .withBody(responseBody)
+                        )
+                )
+
+                val malDownloader = MalDownloader(testMalConfig)
+
+                // when
+                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+                // then
+                assertThat(result).isEqualTo(responseBody)
             }
-
-            val responseBody = "<html><head/><body></body></html>"
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs(STARTED)
-                    .willSetStateTo("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(404)
-                            .withBody("<html><head><title>404 Not Found - MyAnimeList.net</title><body><p>Death Note was not found on this server.</p></body></html>")
-                    )
-            )
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(200)
-                            .withBody(responseBody)
-                    )
-            )
-
-            val malDownloader = MalDownloader(testMalConfig)
-
-            // when
-            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
-
-            // then
-            assertThat(result).isEqualTo(responseBody)
         }
 
         @Test
         fun `response is 429 'too many connections' - therefore has to pause and retry to download`() {
-            // given
-            val id = 1535
+            runBlocking {
+                // given
+                val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun hostname(): Hostname = "localhost"
+                    override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                    override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val responseBody = "<html><head/><body></body></html>"
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(429)
+                                .withBody("<html></html>")
+                        )
+                )
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(200)
+                                .withBody(responseBody)
+                        )
+                )
+
+                val malDownloader = MalDownloader(testMalConfig)
+
+                // when
+                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+                // then
+                assertThat(result).isEqualTo(responseBody)
             }
-
-            val responseBody = "<html><head/><body></body></html>"
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs(STARTED)
-                    .willSetStateTo("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(429)
-                            .withBody("<html></html>")
-                    )
-            )
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(200)
-                            .withBody(responseBody)
-                    )
-            )
-
-            val malDownloader = MalDownloader(testMalConfig)
-
-            // when
-            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
-
-            // then
-            assertThat(result).isEqualTo(responseBody)
         }
 
         @Test
         fun `response is 500 'internal server error' - therefore has to pause and retry to download`() {
-            // given
-            val id = 1535
+            runBlocking {
+                // given
+                val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun hostname(): Hostname = "localhost"
+                    override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                    override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val responseBody = "<html><head/><body></body></html>"
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(500)
+                                .withBody("<html></html>")
+                        )
+                )
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(200)
+                                .withBody(responseBody)
+                        )
+                )
+
+                val malDownloader = MalDownloader(testMalConfig)
+
+                // when
+                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+                // then
+                assertThat(result).isEqualTo(responseBody)
             }
-
-            val responseBody = "<html><head/><body></body></html>"
-
-            serverInstance.stubFor(
-                    get(urlPathEqualTo("/anime/$id"))
-                            .inScenario("pause and retry")
-                            .whenScenarioStateIs(STARTED)
-                            .willSetStateTo("successful retrieval")
-                            .willReturn(
-                                    aResponse()
-                                            .withHeader("Content-Type", "text/html")
-                                            .withStatus(500)
-                                            .withBody("<html></html>")
-                            )
-            )
-
-            serverInstance.stubFor(
-                    get(urlPathEqualTo("/anime/$id"))
-                            .inScenario("pause and retry")
-                            .whenScenarioStateIs("successful retrieval")
-                            .willReturn(
-                                    aResponse()
-                                            .withHeader("Content-Type", "text/html")
-                                            .withStatus(200)
-                                            .withBody(responseBody)
-                            )
-            )
-
-            val malDownloader = MalDownloader(testMalConfig)
-
-            // when
-            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
-
-            // then
-            assertThat(result).isEqualTo(responseBody)
         }
 
         @Test
         fun `response is 504 'gateway timeout' - therefore has to pause and retry to download`() {
-            // given
-            val id = 1535
+            runBlocking {
+                // given
+                val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-                override fun hostname(): Hostname = "localhost"
-                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun hostname(): Hostname = "localhost"
+                    override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                    override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val responseBody = "<html><head/><body></body></html>"
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs(STARTED)
+                        .willSetStateTo("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(504)
+                                .withBody("<html></html>")
+                        )
+                )
+
+                serverInstance.stubFor(
+                    get(urlPathEqualTo("/anime/$id"))
+                        .inScenario("pause and retry")
+                        .whenScenarioStateIs("successful retrieval")
+                        .willReturn(
+                            aResponse()
+                                .withHeader("Content-Type", "text/html")
+                                .withStatus(200)
+                                .withBody(responseBody)
+                        )
+                )
+
+                val malDownloader = MalDownloader(testMalConfig)
+
+                // when
+                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+
+                // then
+                assertThat(result).isEqualTo(responseBody)
             }
-
-            val responseBody = "<html><head/><body></body></html>"
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs(STARTED)
-                    .willSetStateTo("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(504)
-                            .withBody("<html></html>")
-                    )
-            )
-
-            serverInstance.stubFor(
-                get(urlPathEqualTo("/anime/$id"))
-                    .inScenario("pause and retry")
-                    .whenScenarioStateIs("successful retrieval")
-                    .willReturn(
-                        aResponse()
-                            .withHeader("Content-Type", "text/html")
-                            .withStatus(200)
-                            .withBody(responseBody)
-                    )
-            )
-
-            val malDownloader = MalDownloader(testMalConfig)
-
-            // when
-            val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
-
-            // then
-            assertThat(result).isEqualTo(responseBody)
         }
     }
 
@@ -337,67 +347,71 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
 
     @Test
     fun `successfully load an entry`() {
-        // given
-        val id = 1535
+        runBlocking {
+            // given
+            val id = 1535
 
-        val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-            override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-            override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-            override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-        }
+            val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = "localhost"
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+            }
 
-        val responseBody = "<html><head/><body></body></html>"
+            val responseBody = "<html><head/><body></body></html>"
 
-        serverInstance.stubFor(
-            get(urlPathEqualTo("/anime/$id")).willReturn(
-                aResponse()
-                    .withHeader("Content-Type", "text/html")
-                    .withStatus(200)
-                    .withBody(responseBody)
+            serverInstance.stubFor(
+                get(urlPathEqualTo("/anime/$id")).willReturn(
+                    aResponse()
+                        .withHeader("Content-Type", "text/html")
+                        .withStatus(200)
+                        .withBody(responseBody)
+                )
             )
-        )
 
-        val malDownloader = MalDownloader(testMalConfig)
+            val malDownloader = MalDownloader(testMalConfig)
 
-        // when
-        val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() }) }
+            // when
+            val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
-        // then
-        assertThat(result).isEqualTo(responseBody)
+            // then
+            assertThat(result).isEqualTo(responseBody)
+        }
     }
 
     @Test
     fun `responding 404 indicating dead entry - add to dead entry list and return empty string`() {
-        // given
-        val id = 1535
-        var hasDeadEntryBeenInvoked = false
+        runBlocking {
+            // given
+            val id = 1535
+            var hasDeadEntryBeenInvoked = false
 
-        val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
-            override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
-            override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-            override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+            val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                override fun hostname(): Hostname = "localhost"
+                override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
+                override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
+                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+            }
+
+            serverInstance.stubFor(
+                get(urlPathEqualTo("/anime/$id"))
+                    .willReturn(
+                        aResponse()
+                            .withHeader("Content-Type", "text/html")
+                            .withStatus(404)
+                            .withBody("<html><head><title>404 Not Found - MyAnimeList.net</title><body></body></html>")
+                    )
+            )
+
+            val malDownloader = MalDownloader(testMalConfig)
+
+            // when
+            val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true })
+
+            // then
+            assertThat(hasDeadEntryBeenInvoked).isTrue()
+            assertThat(result).isBlank()
         }
-
-        serverInstance.stubFor(
-            get(urlPathEqualTo("/anime/$id"))
-                .willReturn(
-                    aResponse()
-                        .withHeader("Content-Type", "text/html")
-                        .withStatus(404)
-                        .withBody("<html><head><title>404 Not Found - MyAnimeList.net</title><body></body></html>")
-                )
-        )
-
-        val malDownloader = MalDownloader(testMalConfig)
-
-        // when
-        val result = runBlocking { malDownloader.download(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true }) }
-
-        // then
-        assertThat(hasDeadEntryBeenInvoked).isTrue()
-        assertThat(result).isBlank()
     }
 
     @Test
