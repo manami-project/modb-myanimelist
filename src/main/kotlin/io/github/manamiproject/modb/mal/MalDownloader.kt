@@ -3,7 +3,7 @@ package io.github.manamiproject.modb.mal
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
-import io.github.manamiproject.modb.core.excludeFromTestContextSuspendable
+import io.github.manamiproject.modb.core.excludeFromTestContext
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.pickRandom
 import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
@@ -28,7 +28,7 @@ import kotlin.time.toDuration
  */
 public class MalDownloader(
     private val config: MetaDataProviderConfig,
-    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext())
+    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()),
 ) : Downloader {
 
     init {
@@ -67,7 +67,7 @@ public class MalDownloader(
                 retryIf = { httpResponse -> httpResponse.code == 403 },
                 executeBeforeRetry = {
                     log.info { "Crawler has been detected. Pausing for at least 6 minutes." }
-                    excludeFromTestContextSuspendable(config) { delay(random(360000, 390000)) }
+                    excludeFromTestContext(config) { delay(random(360000, 390000)) }
                 }
             )
             addCase(
