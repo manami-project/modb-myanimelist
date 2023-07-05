@@ -192,7 +192,7 @@ public class MalConverter(
     }
 
     private fun extractAnimeSeason(document: Document): AnimeSeason {
-        val text = document.select("a[class=tag-premiered]").text()
+        val text = document.select("a[class=tag-premiered]").text().trim()
 
         val seasonText = Regex("[aA-zZ]+").find(text)?.value ?: EMPTY
         val season =  Season.of(seasonText)

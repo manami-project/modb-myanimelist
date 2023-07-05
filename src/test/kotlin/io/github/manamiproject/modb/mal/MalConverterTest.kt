@@ -479,6 +479,7 @@ internal class MalConverterTest {
 
                 // then
                 assertThat(result.synonyms).containsExactly(
+                    "Prétear",
                     "Prétear: The New Legend of Snow White",
                     "Shin Shirayuki-hime Densetsu Pretear",
                     "新白雪姫伝説プリーティア",
@@ -506,9 +507,9 @@ internal class MalConverterTest {
 
                 // then
                 assertThat(result.synonyms).containsExactly(
-                    "Steins;Gate Special",
-                    "Steins;Gate: Egoistic Poriomania",
-                    "シュタインズ ゲート 横行跋扈のポリオマニア",
+                    "Firewood, Kanta and Granpa",
+                    "Firewood, Kanta, and Grandpa",
+                    "薪とカンタとじいじいと。",
                 )
             }
         }
@@ -619,6 +620,9 @@ internal class MalConverterTest {
                     "Chaos Child Episode 13",
                     "Chaos Child Episode 14",
                     "Chaos Child: Silent Sky",
+                    "Chaos;Child, Folge 13 & 14 Silent Sky",
+                    "ChäoS;Child: Silent Sky. Episodios 13 y 14",
+                    "ChäoS;Child: Épisode 13 und 14 Silent Sky",
                 )
             }
         }
@@ -642,6 +646,7 @@ internal class MalConverterTest {
 
                 // then
                 assertThat(result.synonyms).containsExactly(
+                    "Fate/Grand Order: Divine Realm of the Round Table - Camelot Wandering; Agateram",
                     "劇場版Fate/Grand Order -神聖円卓領域キャメロット- Wandering; Agateram",
                 )
             }
@@ -775,7 +780,7 @@ internal class MalConverterTest {
 
                 // then
                 assertThat(result.relatedAnime).containsExactly(
-                    URI("https://myanimelist.net/anime/14367"),
+                    URI("https://myanimelist.net/anime/10165"),
                 )
             }
         }
@@ -848,7 +853,7 @@ internal class MalConverterTest {
     inner class StatusTests {
 
         @Test
-        fun `'currently airing' is mapped to 'CURRENTLY_AIRING'`() {
+        fun `'currently airing' is mapped to 'ONGOING'`() {
             runBlocking {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -857,7 +862,7 @@ internal class MalConverterTest {
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
-                val testFile = loadTestResource("file_converter_tests/status/currently_airing.html")
+                val testFile = loadTestResource("file_converter_tests/status/ongoing.html")
 
                 val converter = MalConverter(testMalConfig)
 
@@ -870,7 +875,7 @@ internal class MalConverterTest {
         }
 
         @Test
-        fun `'Not yet aired' is mapped to 'NOT_YET_AIRED'`() {
+        fun `'Not yet aired' is mapped to 'UPCOMING'`() {
             runBlocking {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -879,7 +884,7 @@ internal class MalConverterTest {
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
-                val testFile = loadTestResource("file_converter_tests/status/not_yet_aired.html")
+                val testFile = loadTestResource("file_converter_tests/status/upcoming.html")
 
                 val converter = MalConverter(testMalConfig)
 
@@ -892,7 +897,7 @@ internal class MalConverterTest {
         }
 
         @Test
-        fun `'Finished Airing' is mapped to 'FINISHED_AIRING'`() {
+        fun `'Finished Airing' is mapped to 'FINISHED'`() {
             runBlocking {
                 // given
                 val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -901,7 +906,7 @@ internal class MalConverterTest {
                     override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
                 }
 
-                val testFile = loadTestResource("file_converter_tests/status/finished_airing.html")
+                val testFile = loadTestResource("file_converter_tests/status/finished.html")
 
                 val converter = MalConverter(testMalConfig)
 
@@ -938,7 +943,6 @@ internal class MalConverterTest {
                 assertThat(result.tags).containsExactly(
                     "action",
                     "adventure",
-                    "comedy",
                     "drama",
                     "fantasy",
                     "military",
@@ -1337,7 +1341,7 @@ internal class MalConverterTest {
         inner class YearOfPremiereTests {
 
             @Test
-            fun `extract from anime season link which exists in mobile version, but not on desktop version`() {
+            fun `extract from 'aired', because anime season is not set - year only`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1347,7 +1351,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/anime_season_link_mobile_only.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_only.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1355,12 +1359,12 @@ internal class MalConverterTest {
                     val result = converter.convert(testFile)
 
                     // then
-                    assertThat(result.animeSeason.year).isEqualTo(2010)
+                    assertThat(result.animeSeason.year).isEqualTo(1928)
                 }
             }
 
             @Test
-            fun `extract from anime season link which exists on both mobile and desktop version`() {
+            fun `extract from 'aired', because anime season is not set - year to unknown`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1370,7 +1374,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/anime_season_link_on_mobile_and_desktop.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_unknown.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1378,12 +1382,12 @@ internal class MalConverterTest {
                     val result = converter.convert(testFile)
 
                     // then
-                    assertThat(result.animeSeason.year).isEqualTo(2020)
+                    assertThat(result.animeSeason.year).isEqualTo(1996)
                 }
             }
 
             @Test
-            fun `extract from 'aired', because anime season is not set - '2012-07-30 - unknown`() {
+            fun `extract from 'aired', because anime season is not set - unavailable`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1393,7 +1397,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2012-07-30_-_unknown.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_unavailable.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1401,12 +1405,12 @@ internal class MalConverterTest {
                     val result = converter.convert(testFile)
 
                     // then
-                    assertThat(result.animeSeason.year).isEqualTo(2012)
+                    assertThat(result.animeSeason.year).isEqualTo(0)
                 }
             }
 
             @Test
-            fun `extract from 'aired', because anime season is not set - 2018-10-10 - 2018-12-20`() {
+            fun `extract from 'aired', because anime season is not set - exact day to unknown`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1416,7 +1420,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2018-10-10_-_2018-12-20.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_unknown.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1424,12 +1428,12 @@ internal class MalConverterTest {
                     val result = converter.convert(testFile)
 
                     // then
-                    assertThat(result.animeSeason.year).isEqualTo(2018)
+                    assertThat(result.animeSeason.year).isEqualTo(2004)
                 }
             }
 
             @Test
-            fun `extract from 'aired', because anime season is not set - 2019-02-21`() {
+            fun `extract from 'aired', because anime season is not set - year to year`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1439,144 +1443,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2019-02-21.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2019)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 1982-10-09 - 1983`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/1982-10-09_-_1983.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(1982)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 1992-10 - 1993`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/1992-10_-_1993.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(1992)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 2018-09 - unknown`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2018-09_-_unknown.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2018)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 2002`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile = loadTestResource("file_converter_tests/anime_season/year_of_premiere/2002.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2002)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 2008-08 - 2008`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2008-08_-_2008.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2008)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 1964 - 1965`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/1964_-_1965.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_year.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1589,7 +1456,7 @@ internal class MalConverterTest {
             }
 
             @Test
-            fun `extract from 'aired', because anime season is not set - 2011-04 - 2011-05`() {
+            fun `extract from 'aired', because anime season is not set - month of year to year`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1599,7 +1466,7 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2011-04_-_2011-05.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_year.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1607,12 +1474,12 @@ internal class MalConverterTest {
                     val result = converter.convert(testFile)
 
                     // then
-                    assertThat(result.animeSeason.year).isEqualTo(2011)
+                    assertThat(result.animeSeason.year).isEqualTo(1992)
                 }
             }
 
             @Test
-            fun `extract from 'aired', because anime season is not set - 2010 - 2010-03`() {
+            fun `extract from 'aired', because anime season is not set - month of year to unknown`() {
                 runBlocking {
                     // given
                     val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
@@ -1622,7 +1489,123 @@ internal class MalConverterTest {
                     }
 
                     val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2010_-_2010-03.html")
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_unknown.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.year).isEqualTo(1996)
+                }
+            }
+
+            @Test
+            fun `extract from 'aired', because anime season is not set - exact day`() {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile =
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.year).isEqualTo(1980)
+                }
+            }
+
+            @Test
+            fun `extract from 'aired', because anime season is not set - exact day to exact day`() {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile =
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_exact_day.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.year).isEqualTo(1998)
+                }
+            }
+
+
+            @Test
+            fun `extract from 'aired', because anime season is not set - year to exact day`() {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile =
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_exact_day.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.year).isEqualTo(1977)
+                }
+            }
+
+            @Test
+            fun `extract from 'aired', because anime season is not set - exact day to year`() {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile =
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_year.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.year).isEqualTo(1982)
+                }
+            }
+
+            @Test
+            fun `extract from anime season link which exists in mobile version, but not on desktop version`() {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile =
+                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/premiered.html")
 
                     val converter = MalConverter(testMalConfig)
 
@@ -1631,97 +1614,6 @@ internal class MalConverterTest {
 
                     // then
                     assertThat(result.animeSeason.year).isEqualTo(2010)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 1999 - 2000-05-22`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/1999_-_2000-05-22.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(1999)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 2013-01`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile = loadTestResource("file_converter_tests/anime_season/year_of_premiere/2013-01.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2013)
-                }
-            }
-
-            @Test
-            fun `extract from 'aired', because anime season is not set - 2021 - unknown`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/2021_-_unknown.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(2021)
-                }
-            }
-
-            @Test
-            fun `neither anime season nor 'aired' is available`() {
-                runBlocking {
-                    // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
-                    }
-
-                    val testFile =
-                        loadTestResource("file_converter_tests/anime_season/year_of_premiere/neither_premiered_nor_aired_available.html")
-
-                    val converter = MalConverter(testMalConfig)
-
-                    // when
-                    val result = converter.convert(testFile)
-
-                    // then
-                    assertThat(result.animeSeason.year).isEqualTo(0)
                 }
             }
         }
