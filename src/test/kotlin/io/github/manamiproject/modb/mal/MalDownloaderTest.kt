@@ -295,7 +295,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                     .willReturn(
                         aResponse()
                             .withHeader("Content-Type", "text/html")
-                            .withStatus(502)
+                            .withStatus(400)
                             .withBody("<html></html>")
                     )
             )
@@ -308,7 +308,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             }
 
             // then
-            assertThat(result).hasMessage("Unable to determine the correct case for [malId=$id], [responseCode=502]")
+            assertThat(result).hasMessage("Unable to determine the correct case for [malId=$id], [responseCode=400]")
         }
 
         @Test
