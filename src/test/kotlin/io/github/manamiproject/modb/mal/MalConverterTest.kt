@@ -13,6 +13,8 @@ import io.github.manamiproject.modb.test.loadTestResource
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
+import org.junit.jupiter.params.ParameterizedTest
+import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 import java.net.URI
 
@@ -1325,6 +1327,98 @@ internal class MalConverterTest {
                     }
 
                     val testFile = loadTestResource("file_converter_tests/anime_season/season/winter.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.season).isEqualTo(WINTER)
+                }
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = ["apr", "may", "jun"])
+            fun `season is 'SPRING' by aired because premiered is not set`(value: String) {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile = loadTestResource("file_converter_tests/anime_season/season/$value.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.season).isEqualTo(SPRING)
+                }
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = ["jul", "aug", "sep"])
+            fun `season is 'SUMMER' by aired because premiered is not set`(value: String) {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile = loadTestResource("file_converter_tests/anime_season/season/$value.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.season).isEqualTo(SUMMER)
+                }
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = ["oct", "nov", "dec"])
+            fun `season is 'FALL' by aired because premiered is not set`(value: String) {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile = loadTestResource("file_converter_tests/anime_season/season/$value.html")
+
+                    val converter = MalConverter(testMalConfig)
+
+                    // when
+                    val result = converter.convert(testFile)
+
+                    // then
+                    assertThat(result.animeSeason.season).isEqualTo(FALL)
+                }
+            }
+
+            @ParameterizedTest
+            @ValueSource(strings = ["jan", "feb", "mar"])
+            fun `season is 'WINTER' by aired because premiered is not set`(value: String) {
+                runBlocking {
+                    // given
+                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    }
+
+                    val testFile = loadTestResource("file_converter_tests/anime_season/season/$value.html")
 
                     val converter = MalConverter(testMalConfig)
 

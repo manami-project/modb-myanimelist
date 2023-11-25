@@ -192,27 +192,32 @@ public class MalConverter(
     }
 
     private fun extractAnimeSeason(document: Document): AnimeSeason {
-        val text = document.select("td:containsOwn(Premiered)").next().select("a").text().trim()
+        val premiered = document.select("td:containsOwn(Premiered)").next().select("a").text().trim()
+        val aired = document.select("td:containsOwn(Aired)").next().text().trim()
 
-        val seasonText = Regex("[aA-zZ]+").find(text)?.value ?: EMPTY
-        val season =  Season.of(seasonText)
+        val seasonText = Regex("[aA-zZ]+").find(premiered)?.value ?: EMPTY
+        var season =  Season.of(seasonText)
+        if (season == Season.UNDEFINED) {
+            season = when(Regex("[aA-zZ]+").find(aired)?.value?.lowercase() ?: EMPTY) {
+                "jan", "feb", "mar" -> Season.WINTER
+                "apr", "may", "jun" -> Season.SPRING
+                "jul", "aug", "sep" -> Season.SUMMER
+                "oct", "nov", "dec" -> Season.FALL
+                else -> Season.UNDEFINED
+            }
+        }
 
-        val yearPremiered = Regex("[0-9]{4}").find(text)?.value?.toInt() ?: 0
+        val yearPremiered = Regex("[0-9]{4}").find(premiered)?.value?.toInt() ?: 0
         val year = if (yearPremiered != 0) {
             yearPremiered
         } else {
-            exractRegularYear(document)
+            Regex("[0-9]{4}").findAll(aired).firstOrNull()?.value?.toInt() ?: 0
         }
 
         return AnimeSeason(
             season = season,
             year = year
         )
-    }
-
-    private fun exractRegularYear(document: Document): Int {
-        val text = document.select("td:containsOwn(Aired)").next().text().trim()
-        return  Regex("[0-9]{4}").findAll(text).firstOrNull()?.value?.toInt() ?: 0
     }
 
     private fun extractTags(document: Document): List<Tag> {
