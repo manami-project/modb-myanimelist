@@ -101,18 +101,18 @@ public class MalConverter(
     private fun extractPicture(document: Document): URI {
         val text = document.select("div[class=status-block] > div[class=icon-thumb thumbs-zoom]").attr("data-image").trim()
 
-        return if (text == "https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png") {
-            URI("https://cdn.myanimelist.net/images/qm_50.gif")
+        return if (text in setOf("https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png", "https://cdn.myanimelist.net/images/qm_50.gif")) {
+            URI(DEFAULT_IMG)
         } else {
             URI(text)
         }
     }
 
     private fun findThumbnail(picture: URI): URI {
-        return if ("https://cdn.myanimelist.net/images/qm_50.gif" != picture.toString()) {
+        return if (DEFAULT_IMG != picture.toString()) {
             URI(picture.toString().replace(".jpg", "t.jpg"))
         } else {
-            picture
+            URI("https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic_thumbnail.png")
         }
     }
 
@@ -227,5 +227,6 @@ public class MalConverter(
 
     private companion object {
         private val log by LoggerDelegate()
+        private val DEFAULT_IMG = "https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png"
     }
 }
