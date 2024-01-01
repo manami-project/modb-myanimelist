@@ -270,6 +270,28 @@ internal class MalConverterTest {
         }
 
         @Test
+        fun `type 'TV Special' is mapped to SPECIAL`() {
+            runBlocking {
+                // given
+                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                }
+
+                val testFile = loadTestResource("file_converter_tests/type/tv_special.html")
+
+                val converter = MalConverter(testMalConfig)
+
+                // when
+                val result = converter.convert(testFile)
+
+                // then
+                assertThat(result.type).isEqualTo(SPECIAL)
+            }
+        }
+
+        @Test
         fun `movie case which resulted in containsOwn`() {
             runBlocking {
                 // given

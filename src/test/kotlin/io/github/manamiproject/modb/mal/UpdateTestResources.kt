@@ -187,6 +187,8 @@ internal fun main() {
         downloader.download("52811").writeToFile(resourceFile("file_converter_tests/type/pv.html"))
         delay(random(3000, 4800))
         downloader.download("52834").writeToFile(resourceFile("file_converter_tests/type/pv.html"))
+        delay(random(3000, 4800))
+        downloader.download("2312").writeToFile(resourceFile("file_converter_tests/type/tv_special.html"))
 
         println("Done")
     }

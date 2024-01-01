@@ -96,6 +96,7 @@ public class MalConverter(
             "music" -> SPECIAL
             "pv" -> SPECIAL
             "cm" -> SPECIAL
+            "tv special" -> SPECIAL
             else -> throw IllegalStateException("Unknown type [$text]")
         }
     }
