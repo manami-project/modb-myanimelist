@@ -24,7 +24,7 @@ public class MalDownloader(
     private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()).apply {
         retryBehavior.addCases(
             RetryCase { it.code == 403 },
-            RetryCase { it.code == 404 && it.body.contains("was not found on this server.</p>") },
+            RetryCase { it.code == 404 && it.bodyAsText.contains("was not found on this server.</p>") },
         )
     },
 ) : Downloader {
@@ -37,11 +37,11 @@ public class MalDownloader(
             headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
         )
 
-        check(response.body.isNotBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
+        check(response.bodyAsText.isNotBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
 
         return when(response.code) {
-            200 -> response.body
-            404 -> checkDeadEntry(id, onDeadEntry, response.body)
+            200 -> response.bodyAsText
+            404 -> checkDeadEntry(id, onDeadEntry, response.bodyAsText)
             else -> throw IllegalStateException("Unable to determine the correct case for [malId=$id], [responseCode=${response.code}]")
         }
     }
