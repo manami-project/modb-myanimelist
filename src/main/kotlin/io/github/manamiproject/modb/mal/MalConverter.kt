@@ -86,14 +86,15 @@ public class MalConverter(
     }
 
     private fun extractType(document: Document): Type {
-        return when(val text = document.select("td:containsOwn(Type)").next().select("a").text().trim()) {
-            "TV" -> TV
-            "Unknown" -> Type.UNKNOWN
-            "Movie" -> MOVIE
-            "OVA" -> OVA
-            "ONA" -> ONA
-            "Special" -> SPECIAL
-            "Music" -> SPECIAL
+        return when(val text = document.select("td:containsOwn(Type)").next().select("a").text().trim().lowercase()) {
+            "tv" -> TV
+            "unknown" -> Type.UNKNOWN
+            "movie" -> MOVIE
+            "ova" -> OVA
+            "ona" -> ONA
+            "special" -> SPECIAL
+            "music" -> SPECIAL
+            "pv" -> SPECIAL
             else -> throw IllegalStateException("Unknown type [$text]")
         }
     }
