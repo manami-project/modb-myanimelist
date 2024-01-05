@@ -86,7 +86,11 @@ public class MalConverter(
     }
 
     private fun extractType(document: Document): Type {
-        return when(val text = document.select("td:containsOwn(Type)").next().select("a").text().trim().lowercase()) {
+        val typeNode = document.select("td:containsOwn(Type)").next()
+        val typeWithLink = typeNode.select("a")
+        val type = if (typeWithLink.isEmpty()) typeNode.text() else typeWithLink.text()
+
+        return when(val text = type.trim().lowercase()) {
             "tv" -> TV
             "unknown" -> Type.UNKNOWN
             "movie" -> MOVIE
