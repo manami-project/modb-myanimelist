@@ -47,7 +47,7 @@ public class MalConverter(
         ).apply {
             addSources(extractSourcesEntry(document))
             addSynonyms(synonyms)
-            addRelations(extractRelatedAnime(document))
+            addRelatedAnime(extractRelatedAnime(document))
             addTags(extractTags(document))
         }
     }
