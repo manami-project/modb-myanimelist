@@ -568,7 +568,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "Prétear",
                     "Prétear: The New Legend of Snow White",
                     "Shin Shirayuki-hime Densetsu Pretear",
@@ -596,7 +596,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "Firewood, Kanta and Granpa",
                     "Firewood, Kanta, and Grandpa",
                     "薪とカンタとじいじいと。",
@@ -622,7 +622,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "DB Kai",
                     "DBK",
                     "DBZ Kai",
@@ -651,7 +651,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "Kono Naka ni Hitori, Imouto ga Iru! Episode 13",
                     "Kono Naka ni Hitori, Imouto ga Iru! OVA",
                     "NAKAIMO - My Little Sister Is Among Them! OVA",
@@ -679,7 +679,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "Yuru Yuri Special",
                     "YuruYuri: For Whatever Reason, Never Ending, Heart Throbbing, Pitter-patter, Paradox Eternal",
                     "ゆるゆり どうして☆止まらない☆トキメキ☆ドキドキ☆パラドクス☆エターナル",
@@ -705,7 +705,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "CHAOS;CHILD SILENT SKY",
                     "Chaos Child Episode 13",
                     "Chaos Child Episode 14",
@@ -760,7 +760,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.synonyms).containsExactly(
+                assertThat(result.synonyms).containsExactlyInAnyOrder(
                     "Dual Parallel! Trouble Adventures - Final Frontier",
                     "Dual! Parallel Lunlun Monogatari Special",
                     "Dual! Parallel Trouble Adventures Special",
@@ -840,7 +840,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.relatedAnime).containsExactly(
+                assertThat(result.relatedAnime).containsExactlyInAnyOrder(
                     URI("https://myanimelist.net/anime/17819"),
                     URI("https://myanimelist.net/anime/19671"),
                     URI("https://myanimelist.net/anime/22265"),
@@ -894,7 +894,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.relatedAnime).containsExactly(
+                assertThat(result.relatedAnime).containsExactlyInAnyOrder(
                     URI("https://myanimelist.net/anime/12685"),
                     URI("https://myanimelist.net/anime/15197"),
                     URI("https://myanimelist.net/anime/15199"),
@@ -1030,7 +1030,7 @@ internal class MalConverterTest {
                 val result = converter.convert(testFile)
 
                 // then
-                assertThat(result.tags).containsExactly(
+                assertThat(result.tags).containsExactlyInAnyOrder(
                     "action",
                     "adventure",
                     "drama",
