@@ -4,17 +4,20 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extractor.DataExtractor
+import io.github.manamiproject.modb.core.extractor.ExtractionResult
+import io.github.manamiproject.modb.core.extractor.XmlDataExtractor
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 import io.github.manamiproject.modb.core.models.*
+import io.github.manamiproject.modb.core.models.Anime.Companion.NO_PICTURE
+import io.github.manamiproject.modb.core.models.Anime.Companion.NO_PICTURE_THUMBNAIL
 import io.github.manamiproject.modb.core.models.Anime.Status
 import io.github.manamiproject.modb.core.models.Anime.Status.*
 import io.github.manamiproject.modb.core.models.Anime.Type
 import io.github.manamiproject.modb.core.models.Anime.Type.*
 import io.github.manamiproject.modb.core.models.AnimeSeason.Season
 import io.github.manamiproject.modb.core.models.Duration.TimeUnit.SECONDS
-import io.github.manamiproject.modb.core.parseHtml
 import kotlinx.coroutines.withContext
-import org.jsoup.nodes.Document
 import java.net.URI
 
 /**
@@ -25,35 +28,46 @@ import java.net.URI
  */
 public class MalConverter(
     private val config: MetaDataProviderConfig = MalConfig,
+    private val extractor: DataExtractor = XmlDataExtractor,
 ) : AnimeConverter {
 
     override suspend fun convert(rawContent: String): Anime = withContext(LIMITED_CPU) {
-        val document = parseHtml(rawContent)
+        val data = extractor.extract(rawContent, mapOf(
+            "title" to "//meta[@property='og:title']/@content",
+            "episodes" to "//td[contains(text(), 'Episodes')]/following-sibling::td/a/text()",
+            "source" to "//meta[@property='og:url']/@content",
+            "status" to "//td[contains(text(), 'Status')]/following-sibling::*/text()",
+            "tags" to "//span[@itemprop='genre']/text()",
+            "type" to "//td[contains(text(), 'Type')]/following-sibling::*/text()",
+            "duration" to "//td[contains(text(), 'Duration')]/following-sibling::*/text()",
+            "premiered" to "//td[contains(text(), 'Premiered')]/following-sibling::*/text()",
+            "aired" to "//td[contains(text(), 'Aired')]/following-sibling::*/text()",
+            "picture" to "//div[contains(@class, 'status-block')]/div[@itemprop='image']/@content",
+            "relatedAnime" to "//div[@id='related-manga']/table/tbody//a[contains(@href, 'https://myanimelist.net/anime/')]/@href",
+            "synonyms" to "//h2[contains(text(), 'Information')]/following-sibling::*//tr[0]/td[1]",
+        ))
 
-        val picture = extractPicture(document)
-        val title = extractTitle(document)
-
-        val synonyms = postProcessSynonyms(title, extractSynonyms(document))
+        val picture = extractPicture(data)
+        val title = extractTitle(data)
 
         return@withContext Anime(
             _title = title,
-            episodes = extractEpisodes(document),
-            type = extractType(document),
+            episodes = extractEpisodes(data),
+            type = extractType(data),
             picture = picture,
             thumbnail = findThumbnail(picture),
-            status = extractStatus(document),
-            duration = extractDuration(document),
-            animeSeason = extractAnimeSeason(document),
-        ).apply {
-            addSources(extractSourcesEntry(document))
-            addSynonyms(synonyms)
-            addRelatedAnime(extractRelatedAnime(document))
-            addTags(extractTags(document))
-        }
+            status = extractStatus(data),
+            duration = extractDuration(data),
+            animeSeason = extractAnimeSeason(data),
+            sources = extractSourcesEntry(data),
+            synonyms = postProcessSynonyms(title, extractSynonyms(data)),
+            relatedAnime = extractRelatedAnime(data),
+            tags = extractTags(data)
+        )
     }
 
-    private fun postProcessSynonyms(title: String, synonyms: List<String>): List<String> {
-        val processedSynonyms = mutableListOf<String>()
+    private fun postProcessSynonyms(title: String, synonyms: HashSet<String>): HashSet<String> {
+        val processedSynonyms = hashSetOf<String>()
 
         when {
             !title.contains(';')  -> {
@@ -75,22 +89,19 @@ public class MalConverter(
         return processedSynonyms
     }
 
-    private fun extractTitle(document: Document) = document.select("meta[property=og:title]").attr("content").trim()
+    private fun extractTitle(data: ExtractionResult) = data.string("title")
 
-    private fun extractEpisodes(document: Document): Int {
-        val text = document.select("td:containsOwn(Episodes)").next().select("a").text().trim()
-
-        val matchResult = Regex("[0-9]+").find(text)
-
-        return matchResult?.value?.toInt() ?: 0
+    private fun extractEpisodes(data: ExtractionResult): Int {
+        return if (data.notFound("episodes")) {
+            0
+        } else {
+            val matchResult = Regex("\\d+").find(data.string("episodes"))
+            return matchResult?.value?.toInt() ?: 0
+        }
     }
 
-    private fun extractType(document: Document): Type {
-        val typeNode = document.select("td:containsOwn(Type)").next()
-        val typeWithLink = typeNode.select("a")
-        val type = if (typeWithLink.isEmpty()) typeNode.text() else typeWithLink.text()
-
-        return when(val text = type.trim().lowercase()) {
+    private fun extractType(data: ExtractionResult): Type {
+        return when(data.string("type").trim().lowercase()) {
             "tv" -> TV
             "unknown" -> Type.UNKNOWN
             "movie" -> MOVIE
@@ -101,70 +112,70 @@ public class MalConverter(
             "pv" -> SPECIAL
             "cm" -> SPECIAL
             "tv special" -> SPECIAL
-            else -> throw IllegalStateException("Unknown type [$text]")
+            else -> throw IllegalStateException("Unknown type [${data.string("type")}]")
         }
     }
 
-    private fun extractPicture(document: Document): URI {
-        val text = document.select("div[class=status-block] > div[class=icon-thumb thumbs-zoom]").attr("data-image").trim()
+    private fun extractPicture(data: ExtractionResult): URI {
+        val text = data.string("picture").trim()
 
         return if (text in setOf("https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png", "https://cdn.myanimelist.net/images/qm_50.gif")) {
-            URI(DEFAULT_IMG)
+            NO_PICTURE
         } else {
             URI(text)
         }
     }
 
     private fun findThumbnail(picture: URI): URI {
-        return if (DEFAULT_IMG != picture.toString()) {
+        return if (NO_PICTURE != picture) {
             URI(picture.toString().replace(".jpg", "t.jpg"))
         } else {
-            URI("https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic_thumbnail.png")
+            NO_PICTURE_THUMBNAIL
         }
     }
 
-    private fun extractSynonyms(document: Document): List<Title> {
-        return document.select("h2:containsOwn(Information)")
-            .next()
-            .select("tr")
-            .first()!!
-            .select("td")[1]
-            .textNodes()
-            .map { it.text() }
-            .filter { it.isNotBlank() }
+    private fun extractSynonyms(data: ExtractionResult): HashSet<Title> {
+        return if (data.notFound("synonyms")) {
+            hashSetOf()
+        } else {
+            data.listNotNull<Title>("synonyms").toHashSet()
+        }
     }
 
-    private fun extractSourcesEntry(document: Document): List<URI> {
-        val text = document.select("meta[property=og:url]").attr("content").trim()
+    private fun extractSourcesEntry(data: ExtractionResult): HashSet<URI> {
+        val text = data.string("source")
         val matchResult = Regex("/[0-9]+/").find(text)
         val rawId = matchResult?.value ?: throw IllegalStateException("Unable to extract source")
         val id = rawId.trimStart('/').trimEnd('/')
-
-        return listOf(config.buildAnimeLink(id))
+        return hashSetOf(config.buildAnimeLink(id))
     }
 
-    private fun extractRelatedAnime(document: Document): List<URI> {
-        return document.select("h2:containsOwn(Related Anime)").next().select("table > tbody > tr")
-            .filterNot { it.text().trim().startsWith("Adaptation") }
-            .flatMap { it.select("a") }
-            .map { it.attr("href") }
+    private fun extractRelatedAnime(data: ExtractionResult): HashSet<URI> {
+        if (data.notFound("relatedAnime")) {
+            return hashSetOf()
+        }
+
+        return data.listNotNull<String>("relatedAnime")
             .mapNotNull { Regex("[0-9]+").find(it)?.value }
             .map { config.buildAnimeLink(it) }
+            .toHashSet()
     }
 
-    private fun extractStatus(document: Document): Status {
-        val status = document.select("td:containsOwn(Status)").next().text().trim()
-
-        return when(status) {
-            "Finished Airing" -> FINISHED
-            "Currently Airing" -> ONGOING
-            "Not yet aired" -> UPCOMING
-            else -> throw IllegalStateException("Unknown status [$status}]")
+    private fun extractStatus(data: ExtractionResult): Status {
+        return when(data.string("status").trim().lowercase()) {
+            "finished airing" -> FINISHED
+            "currently airing" -> ONGOING
+            "not yet aired" -> UPCOMING
+            else -> throw IllegalStateException("Unknown status [${data.string("status")}]")
         }
     }
 
-    private fun extractDuration(document: Document): Duration {
-        val text = document.select("td:containsOwn(Duration)").next().text().trim()
+    private fun extractDuration(data: ExtractionResult): Duration {
+        if (data.notFound("duration")) {
+            return Duration.UNKNOWN
+        }
+
+        val text = data.string("duration").trim()
 
         val values = Regex("[0-9]+").findAll(text).toList().map { it.value }
         val units = Regex("(hr|min|sec)").findAll(text)
@@ -198,9 +209,9 @@ public class MalConverter(
         return Duration(durationInSeconds, SECONDS)
     }
 
-    private fun extractAnimeSeason(document: Document): AnimeSeason {
-        val premiered = document.select("td:containsOwn(Premiered)").next().select("a").text().trim()
-        val aired = document.select("td:containsOwn(Aired)").next().text().trim()
+    private fun extractAnimeSeason(data: ExtractionResult): AnimeSeason {
+        val premiered = data.string("premiered").trim()
+        val aired = data.string("aired").trim()
 
         val seasonText = Regex("[aA-zZ]+").find(premiered)?.value ?: EMPTY
         var season =  Season.of(seasonText)
@@ -227,13 +238,17 @@ public class MalConverter(
         )
     }
 
-    private fun extractTags(document: Document): List<Tag> {
-        return document.select("span[itemprop=genre]")
-            .eachText()
+    private fun extractTags(data: ExtractionResult): HashSet<Tag> {
+        return if (data.notFound("tags")) {
+            hashSetOf()
+        } else {
+            data.listNotNull<Tag>("tags")
+                .filterNot { it == data.string("title") }
+                .toHashSet()
+        }
     }
 
     private companion object {
         private val log by LoggerDelegate()
-        private val DEFAULT_IMG = "https://raw.githubusercontent.com/manami-project/anime-offline-database/master/pics/no_pic.png"
     }
 }
