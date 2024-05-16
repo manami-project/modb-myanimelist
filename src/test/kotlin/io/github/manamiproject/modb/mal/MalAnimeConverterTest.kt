@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 import java.net.URI
 
-internal class MalConverterTest {
+internal class MalAnimeConverterTest {
 
     @Nested
     inner class TitleTests {
@@ -35,7 +35,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/title/special_chars.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -57,7 +57,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/title/english_and_original_title.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -83,7 +83,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/tv.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -105,7 +105,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/unknown.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -127,7 +127,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/movie.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -149,7 +149,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/music.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -171,7 +171,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/ona.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -193,7 +193,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/ova.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -215,7 +215,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/special.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -237,7 +237,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/pv.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -259,7 +259,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/cm.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -281,7 +281,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/tv_special.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -303,7 +303,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/music_without_link.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -326,7 +326,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/type/movie_case_which_resulted_in_containsOwn.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -352,7 +352,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/unknown.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -374,7 +374,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/1.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -396,7 +396,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/10.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -418,7 +418,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/100.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -440,7 +440,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/1818.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -467,7 +467,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -491,7 +491,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -518,7 +518,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/no_synonyms.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -540,7 +540,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/one_synonym.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -562,7 +562,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/multiple_languages_one_each.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -590,7 +590,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/synonym_contains_comma_but_title_does_not.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -616,7 +616,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/multiple_synonyms_for_one_language.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -645,7 +645,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/multiple_synonyms_with_comma_in_one_language.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -673,7 +673,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/one_synonym_with_multiple_commas.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -699,7 +699,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_synonym_wihtout_whitespaces.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -729,7 +729,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_synonym_with_whitespace.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -754,7 +754,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_title_but_not_in_synonyms.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -785,7 +785,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/sources/16498.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -811,7 +811,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/related_anime/no_adaption_no_relations.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -834,7 +834,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/no_adaption_multiple_relations.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -863,7 +863,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/has_one_adaption_and_one_relation.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -888,7 +888,7 @@ internal class MalConverterTest {
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/has_adaption_and_multiple_relations.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -928,7 +928,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/related_anime/has_adaption_but_no_relation.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -954,7 +954,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/ongoing.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -976,7 +976,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/upcoming.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -998,7 +998,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/finished.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1024,7 +1024,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/multiple_tags.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1053,7 +1053,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/one_tag.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1075,7 +1075,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/no_tags.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1101,7 +1101,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1123,7 +1123,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour_11_min.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1145,7 +1145,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour_11_min_per_episode.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1167,7 +1167,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/2_hours.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1189,7 +1189,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/2_hours_15_minutes.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1211,7 +1211,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_min.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1233,7 +1233,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_min_per_episode.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1255,7 +1255,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_sec.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1277,7 +1277,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_sec_per_episode.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1299,7 +1299,7 @@ internal class MalConverterTest {
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/unknown.html")
 
-                val converter = MalConverter(testMalConfig)
+                val converter = MalAnimeConverter(testMalConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1328,7 +1328,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/undefined.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1350,7 +1350,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/fall.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1372,7 +1372,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/spring.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1394,7 +1394,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/summer.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1416,7 +1416,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/winter.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1439,7 +1439,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1462,7 +1462,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1485,7 +1485,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1508,7 +1508,7 @@ internal class MalConverterTest {
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1535,7 +1535,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_only.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1558,7 +1558,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_unknown.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1581,7 +1581,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_unavailable.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1604,7 +1604,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_unknown.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1627,7 +1627,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_year.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1650,7 +1650,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_year.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1673,7 +1673,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_unknown.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1696,7 +1696,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1719,7 +1719,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_exact_day.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1743,7 +1743,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_exact_day.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1766,7 +1766,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_year.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1789,7 +1789,7 @@ internal class MalConverterTest {
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/premiered.html")
 
-                    val converter = MalConverter(testMalConfig)
+                    val converter = MalAnimeConverter(testMalConfig)
 
                     // when
                     val result = converter.convert(testFile)
