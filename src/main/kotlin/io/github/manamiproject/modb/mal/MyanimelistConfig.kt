@@ -8,7 +8,7 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
  * Configuration for downloading and converting anime data from myanimelist.net
  * @since 1.0.0
  */
-public object MalConfig: MetaDataProviderConfig {
+public object MyanimelistConfig: MetaDataProviderConfig {
 
     override fun hostname(): Hostname = "myanimelist.net"
 

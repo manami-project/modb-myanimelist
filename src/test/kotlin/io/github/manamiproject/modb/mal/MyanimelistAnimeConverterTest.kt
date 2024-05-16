@@ -18,7 +18,7 @@ import org.junit.jupiter.params.provider.ValueSource
 import kotlin.test.Test
 import java.net.URI
 
-internal class MalAnimeConverterTest {
+internal class MyanimelistAnimeConverterTest {
 
     @Nested
     inner class TitleTests {
@@ -27,15 +27,15 @@ internal class MalAnimeConverterTest {
         fun `title containing special chars`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/title/special_chars.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -49,15 +49,15 @@ internal class MalAnimeConverterTest {
         fun `anime has original and english title in header`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/title/english_and_original_title.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -75,15 +75,15 @@ internal class MalAnimeConverterTest {
         fun `type is TV`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/tv.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -97,15 +97,15 @@ internal class MalAnimeConverterTest {
         fun `'Unknown' is mapped to 'UNKNOWN'`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/unknown.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -119,15 +119,15 @@ internal class MalAnimeConverterTest {
         fun `type is Movie`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/movie.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -141,15 +141,15 @@ internal class MalAnimeConverterTest {
         fun `type is music is mapped to special`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/music.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -163,15 +163,15 @@ internal class MalAnimeConverterTest {
         fun `type is ONA`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/ona.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -185,15 +185,15 @@ internal class MalAnimeConverterTest {
         fun `type is OVA`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/ova.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -207,15 +207,15 @@ internal class MalAnimeConverterTest {
         fun `type is Special`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/special.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -229,15 +229,15 @@ internal class MalAnimeConverterTest {
         fun `type PV is mapped to SPECIAL`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/pv.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -251,15 +251,15 @@ internal class MalAnimeConverterTest {
         fun `type CM is mapped to SPECIAL`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/cm.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -273,15 +273,15 @@ internal class MalAnimeConverterTest {
         fun `type 'TV Special' is mapped to SPECIAL`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/tv_special.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -295,15 +295,15 @@ internal class MalAnimeConverterTest {
         fun `type Music but without a link is mapped to SPECIAL`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/type/music_without_link.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -317,16 +317,16 @@ internal class MalAnimeConverterTest {
         fun `movie case which resulted in containsOwn`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/type/movie_case_which_resulted_in_containsOwn.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -344,15 +344,15 @@ internal class MalAnimeConverterTest {
         fun `unknown number of episodes`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/unknown.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -366,15 +366,15 @@ internal class MalAnimeConverterTest {
         fun `1 episode`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/1.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -388,15 +388,15 @@ internal class MalAnimeConverterTest {
         fun `10 episodes`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/10.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -410,15 +410,15 @@ internal class MalAnimeConverterTest {
         fun `100 episodes`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/100.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -432,15 +432,15 @@ internal class MalAnimeConverterTest {
         fun `1818 episodes`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/episodes/1818.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -458,16 +458,16 @@ internal class MalAnimeConverterTest {
         fun `neither picture nor thumbnail`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -482,16 +482,16 @@ internal class MalAnimeConverterTest {
         fun `picture and thumbnail`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -510,15 +510,15 @@ internal class MalAnimeConverterTest {
         fun `no synonyms`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/no_synonyms.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -532,15 +532,15 @@ internal class MalAnimeConverterTest {
         fun `one synonym`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/one_synonym.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -554,15 +554,15 @@ internal class MalAnimeConverterTest {
         fun `multiple languages, one synonym each`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/multiple_languages_one_each.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -581,16 +581,16 @@ internal class MalAnimeConverterTest {
         fun `synonym containing comma`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/synonym_contains_comma_but_title_does_not.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -608,15 +608,15 @@ internal class MalAnimeConverterTest {
         fun `multiple synonyms for one language`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/multiple_synonyms_for_one_language.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -637,15 +637,15 @@ internal class MalAnimeConverterTest {
         fun `multiple synonyms with comma in one language section`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/multiple_synonyms_with_comma_in_one_language.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -666,14 +666,14 @@ internal class MalAnimeConverterTest {
         fun `one synonym with multiple commas`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/synonyms/one_synonym_with_multiple_commas.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -691,15 +691,15 @@ internal class MalAnimeConverterTest {
         fun `semicolon in synonym wihtout whitespaces`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_synonym_wihtout_whitespaces.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -721,15 +721,15 @@ internal class MalAnimeConverterTest {
         fun `semicolon in synonym with whitespace`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_synonym_with_whitespace.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -746,15 +746,15 @@ internal class MalAnimeConverterTest {
         fun `semicolon in title but not in synonyms`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/synonyms/semicolon_in_title_but_not_in_synonyms.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -777,15 +777,15 @@ internal class MalAnimeConverterTest {
         fun `extract id 16498`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/sources/16498.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -803,15 +803,15 @@ internal class MalAnimeConverterTest {
         fun `no adaption, no relations`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/related_anime/no_adaption_no_relations.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -825,16 +825,16 @@ internal class MalAnimeConverterTest {
         fun `no adaption, multiple relations`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/no_adaption_multiple_relations.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -854,16 +854,16 @@ internal class MalAnimeConverterTest {
         fun `one adaption, one relation`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/has_one_adaption_and_one_relation.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -879,16 +879,16 @@ internal class MalAnimeConverterTest {
         fun `has adaption, multiple relations`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile =
                     loadTestResource<String>("file_converter_tests/related_anime/has_adaption_and_multiple_relations.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -920,15 +920,15 @@ internal class MalAnimeConverterTest {
         fun `has adaption, no relations`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/related_anime/has_adaption_but_no_relation.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -946,15 +946,15 @@ internal class MalAnimeConverterTest {
         fun `'currently airing' is mapped to 'ONGOING'`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/ongoing.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -968,15 +968,15 @@ internal class MalAnimeConverterTest {
         fun `'Not yet aired' is mapped to 'UPCOMING'`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/upcoming.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -990,15 +990,15 @@ internal class MalAnimeConverterTest {
         fun `'Finished Airing' is mapped to 'FINISHED'`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/status/finished.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1016,15 +1016,15 @@ internal class MalAnimeConverterTest {
         fun `extract multiple tags`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/multiple_tags.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1045,15 +1045,15 @@ internal class MalAnimeConverterTest {
         fun `extract exactly one tag`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/one_tag.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1067,15 +1067,15 @@ internal class MalAnimeConverterTest {
         fun `no tags available`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/tags/no_tags.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1093,15 +1093,15 @@ internal class MalAnimeConverterTest {
         fun `1 hr`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1115,15 +1115,15 @@ internal class MalAnimeConverterTest {
         fun `1 hr 11 min`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour_11_min.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1137,15 +1137,15 @@ internal class MalAnimeConverterTest {
         fun `1 hr 11 min per ep`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/1_hour_11_min_per_episode.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1159,15 +1159,15 @@ internal class MalAnimeConverterTest {
         fun `2 hr`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/2_hours.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1181,15 +1181,15 @@ internal class MalAnimeConverterTest {
         fun `2 hr 15 min`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/2_hours_15_minutes.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1203,15 +1203,15 @@ internal class MalAnimeConverterTest {
         fun `10 min`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_min.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1225,15 +1225,15 @@ internal class MalAnimeConverterTest {
         fun `10 min per ep`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_min_per_episode.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1247,15 +1247,15 @@ internal class MalAnimeConverterTest {
         fun `10 sec`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_sec.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1269,15 +1269,15 @@ internal class MalAnimeConverterTest {
         fun `10 sec per ep`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/10_sec_per_episode.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1291,15 +1291,15 @@ internal class MalAnimeConverterTest {
         fun `unknown duration`() {
             runBlocking {
                 // given
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                    override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                    override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                    override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                    override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val testFile = loadTestResource<String>("file_converter_tests/duration/unknown.html")
 
-                val converter = MalAnimeConverter(testMalConfig)
+                val converter = MyanimelistAnimeConverter(testConfig)
 
                 // when
                 val result = converter.convert(testFile)
@@ -1320,15 +1320,15 @@ internal class MalAnimeConverterTest {
             fun `'UNDEFINED', because anime season link is not available`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/undefined.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1342,15 +1342,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'FALL'`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/fall.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1364,15 +1364,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'SPRING'`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/spring.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1386,15 +1386,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'SUMMER'`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/summer.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1408,15 +1408,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'WINTER'`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/winter.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1431,15 +1431,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'SPRING' by aired because premiered is not set`(value: String) {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1454,15 +1454,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'SUMMER' by aired because premiered is not set`(value: String) {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1477,15 +1477,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'FALL' by aired because premiered is not set`(value: String) {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1500,15 +1500,15 @@ internal class MalAnimeConverterTest {
             fun `season is 'WINTER' by aired because premiered is not set`(value: String) {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile = loadTestResource<String>("file_converter_tests/anime_season/season/$value.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1526,16 +1526,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - year only`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_only.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1549,16 +1549,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - year to unknown`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_unknown.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1572,16 +1572,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - unavailable`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_unavailable.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1595,16 +1595,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - exact day to unknown`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_unknown.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1618,16 +1618,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - year to year`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_year.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1641,16 +1641,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - month of year to year`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_year.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1664,16 +1664,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - month of year to unknown`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_month_of_year_to_unknown.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1687,16 +1687,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - exact day`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1710,16 +1710,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - exact day to exact day`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_exact_day.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1734,16 +1734,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - year to exact day`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_year_to_exact_day.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1757,16 +1757,16 @@ internal class MalAnimeConverterTest {
             fun `extract from 'aired', because anime season is not set - exact day to year`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/aired_node_-_exact_day_to_year.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)
@@ -1780,16 +1780,16 @@ internal class MalAnimeConverterTest {
             fun `extract from anime season link which exists in mobile version, but not on desktop version`() {
                 runBlocking {
                     // given
-                    val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
-                        override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
-                        override fun buildDataDownloadLink(id: String): URI = MalConfig.buildDataDownloadLink(id)
-                        override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                        override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
+                        override fun buildDataDownloadLink(id: String): URI = MyanimelistConfig.buildDataDownloadLink(id)
+                        override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                     }
 
                     val testFile =
                         loadTestResource<String>("file_converter_tests/anime_season/year_of_premiere/premiered.html")
 
-                    val converter = MalAnimeConverter(testMalConfig)
+                    val converter = MyanimelistAnimeConverter(testConfig)
 
                     // when
                     val result = converter.convert(testFile)

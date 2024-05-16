@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Nested
 import kotlin.test.Test
 import java.net.URI
 
-internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
+internal class MyanimelistDownloaderTest : MockServerTestCase<WireMockServer> by WireMockServerCreator() {
 
     @Nested
     inner class WaitAndRetryTests {
@@ -30,11 +30,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 // given
                 val id = 1535
 
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                     override fun hostname(): Hostname = "localhost"
                     override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                     override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val responseBody = "<html><head/><body>Data</body></html>"
@@ -64,10 +64,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                         )
                 )
 
-                val malDownloader = MalDownloader(testMalConfig)
+                val downloader = MyanimelistDownloader(testConfig)
 
                 // when
-                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
                 // then
                 assertThat(result).isEqualTo(responseBody)
@@ -80,11 +80,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 // given
                 val id = 1535
 
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                     override fun hostname(): Hostname = "localhost"
                     override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                     override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val responseBody = "<html><head/><body></body></html>"
@@ -114,10 +114,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                         )
                 )
 
-                val malDownloader = MalDownloader(testMalConfig)
+                val downloader = MyanimelistDownloader(testConfig)
 
                 // when
-                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
                 // then
                 assertThat(result).isEqualTo(responseBody)
@@ -130,11 +130,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 // given
                 val id = 1535
 
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                     override fun hostname(): Hostname = "localhost"
                     override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                     override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val responseBody = "<html><head/><body></body></html>"
@@ -164,10 +164,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                         )
                 )
 
-                val malDownloader = MalDownloader(testMalConfig)
+                val downloader = MyanimelistDownloader(testConfig)
 
                 // when
-                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
                 // then
                 assertThat(result).isEqualTo(responseBody)
@@ -180,11 +180,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 // given
                 val id = 1535
 
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                     override fun hostname(): Hostname = "localhost"
                     override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                     override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val responseBody = "<html><head/><body></body></html>"
@@ -214,10 +214,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                         )
                 )
 
-                val malDownloader = MalDownloader(testMalConfig)
+                val downloader = MyanimelistDownloader(testConfig)
 
                 // when
-                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
                 // then
                 assertThat(result).isEqualTo(responseBody)
@@ -230,11 +230,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 // given
                 val id = 1535
 
-                val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+                val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                     override fun hostname(): Hostname = "localhost"
                     override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                     override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                    override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                    override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
                 }
 
                 val responseBody = "<html><head/><body></body></html>"
@@ -264,10 +264,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                         )
                 )
 
-                val malDownloader = MalDownloader(testMalConfig)
+                val downloader = MyanimelistDownloader(testConfig)
 
                 // when
-                val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
                 // then
                 assertThat(result).isEqualTo(responseBody)
@@ -283,11 +283,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             // given
             val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+            val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
                 override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                 override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
             }
 
             serverInstance.stubFor(
@@ -300,15 +300,15 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                     )
             )
 
-            val malDownloader = MalDownloader(testMalConfig)
+            val downloader = MyanimelistDownloader(testConfig)
 
             // when
             val result = exceptionExpected<IllegalStateException> {
-                malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
             }
 
             // then
-            assertThat(result).hasMessage("Unable to determine the correct case for [malId=$id], [responseCode=400]")
+            assertThat(result).hasMessage("Unable to determine the correct case for [myanimelistId=$id], [responseCode=400]")
         }
 
         @Test
@@ -316,11 +316,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             // given
             val id = 1535
 
-            val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+            val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
                 override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                 override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
             }
 
             serverInstance.stubFor(
@@ -333,15 +333,15 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                     )
             )
 
-            val malDownloader = MalDownloader(testMalConfig)
+            val downloader = MyanimelistDownloader(testConfig)
 
             // when
             val result = exceptionExpected<IllegalStateException> {
-                malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+                downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
             }
 
             // then
-            assertThat(result).hasMessage("Unknown 404 case for [malId=$id]")
+            assertThat(result).hasMessage("Unknown 404 case for [myanimelistId=$id]")
         }
     }
 
@@ -351,11 +351,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             // given
             val id = 1535
 
-            val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+            val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
                 override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                 override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
             }
 
             val responseBody = "<html><head/><body></body></html>"
@@ -369,10 +369,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                 )
             )
 
-            val malDownloader = MalDownloader(testMalConfig)
+            val downloader = MyanimelistDownloader(testConfig)
 
             // when
-            val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
+            val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { shouldNotBeInvoked() })
 
             // then
             assertThat(result).isEqualTo(responseBody)
@@ -386,11 +386,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             val id = 1535
             var hasDeadEntryBeenInvoked = false
 
-            val testMalConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
+            val testConfig = object : MetaDataProviderConfig by MetaDataProviderTestConfig {
                 override fun hostname(): Hostname = "localhost"
                 override fun buildAnimeLink(id: AnimeId): URI = URI("http://localhost:$port/anime/$id")
                 override fun buildDataDownloadLink(id: String): URI = buildAnimeLink(id)
-                override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+                override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
             }
 
             serverInstance.stubFor(
@@ -403,10 +403,10 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
                     )
             )
 
-            val malDownloader = MalDownloader(testMalConfig)
+            val downloader = MyanimelistDownloader(testConfig)
 
             // when
-            val result = malDownloader.download(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true })
+            val result = downloader.download(id = id.toAnimeId(), onDeadEntry = { hasDeadEntryBeenInvoked = true })
 
             // then
             assertThat(hasDeadEntryBeenInvoked).isTrue()
@@ -419,11 +419,11 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         // given
         val id = 1535
 
-        val testMalConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
+        val testConfig = object: MetaDataProviderConfig by MetaDataProviderTestConfig {
             override fun hostname(): Hostname = "localhost"
-            override fun buildAnimeLink(id: AnimeId): URI = MalConfig.buildAnimeLink(id)
+            override fun buildAnimeLink(id: AnimeId): URI = MyanimelistConfig.buildAnimeLink(id)
             override fun buildDataDownloadLink(id: String): URI = URI("http://${hostname()}:$port/anime/$id")
-            override fun fileSuffix(): FileSuffix = MalConfig.fileSuffix()
+            override fun fileSuffix(): FileSuffix = MyanimelistConfig.fileSuffix()
         }
 
         serverInstance.stubFor(
@@ -435,7 +435,7 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
             )
         )
 
-        val downloader = MalDownloader(testMalConfig)
+        val downloader = MyanimelistDownloader(testConfig)
 
         // when
         val result = exceptionExpected<IllegalStateException> {
@@ -443,6 +443,6 @@ internal class MalDownloaderTest : MockServerTestCase<WireMockServer> by WireMoc
         }
 
         // then
-        assertThat(result).hasMessage("Response body was blank for [malId=1535] with response code [200]")
+        assertThat(result).hasMessage("Response body was blank for [myanimelistId=1535] with response code [200]")
     }
 }

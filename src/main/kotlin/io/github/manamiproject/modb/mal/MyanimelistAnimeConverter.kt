@@ -27,8 +27,8 @@ import java.net.URI
  * @since 1.0.0
  * @param config Configuration for converting data.
  */
-public class MalAnimeConverter(
-    private val config: MetaDataProviderConfig = MalConfig,
+public class MyanimelistAnimeConverter(
+    private val config: MetaDataProviderConfig = MyanimelistConfig,
     private val extractor: DataExtractor = XmlDataExtractor,
 ) : AnimeConverter {
 

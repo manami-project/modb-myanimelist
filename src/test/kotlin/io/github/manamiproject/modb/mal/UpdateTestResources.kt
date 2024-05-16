@@ -9,7 +9,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 
 internal fun main() {
-    val downloader = MalDownloader(MalConfig)
+    val downloader = MyanimelistDownloader(MyanimelistConfig)
     
     runCoroutine {
         downloader.download("10098").writeToFile(resourceFile("file_converter_tests/anime_season/season/jan.html"))

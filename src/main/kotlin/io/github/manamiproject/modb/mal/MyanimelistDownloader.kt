@@ -20,7 +20,7 @@ import io.github.manamiproject.modb.core.logging.LoggerDelegate
  * @param config Configuration for downloading data.
  * @param httpClient To actually download the anime data.
  */
-public class MalDownloader(
+public class MyanimelistDownloader(
     private val config: MetaDataProviderConfig,
     private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()).apply {
         retryBehavior.addCases(
@@ -31,29 +31,29 @@ public class MalDownloader(
 ) : Downloader {
 
     override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
-        log.debug { "Downloading [malId=$id]" }
+        log.debug { "Downloading [myanimelistId=$id]" }
 
         val response = httpClient.get(
             url = config.buildDataDownloadLink(id).toURL(),
             headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
         )
 
-        check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
+        check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [myanimelistId=$id] with response code [${response.code}]" }
 
         return when(response.code) {
             200 -> response.bodyAsText
             404 -> checkDeadEntry(id, onDeadEntry, response.bodyAsText)
-            else -> throw IllegalStateException("Unable to determine the correct case for [malId=$id], [responseCode=${response.code}]")
+            else -> throw IllegalStateException("Unable to determine the correct case for [myanimelistId=$id], [responseCode=${response.code}]")
         }
     }
 
-    private suspend fun checkDeadEntry(malId: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit, responseBody: String): String {
+    private suspend fun checkDeadEntry(myanimelistId: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit, responseBody: String): String {
         return when {
             responseBody.contains("<title>404 Not Found - MyAnimeList.net") -> {
-                onDeadEntry.invoke(malId)
+                onDeadEntry.invoke(myanimelistId)
                 EMPTY
             }
-            else -> throw IllegalStateException("Unknown 404 case for [malId=$malId]")
+            else -> throw IllegalStateException("Unknown 404 case for [myanimelistId=$myanimelistId]")
         }
     }
 

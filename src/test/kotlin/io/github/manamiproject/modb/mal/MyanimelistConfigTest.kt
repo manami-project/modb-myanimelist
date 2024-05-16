@@ -4,12 +4,12 @@ import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.Test
 import java.net.URI
 
-internal class MalConfigTest {
+internal class MyanimelistConfigTest {
 
     @Test
     fun `isTestContext is false`() {
         // when
-        val result = MalConfig.isTestContext()
+        val result = MyanimelistConfig.isTestContext()
 
         // then
         assertThat(result).isFalse()
@@ -18,7 +18,7 @@ internal class MalConfigTest {
     @Test
     fun `hostname must be correct`() {
         // when
-        val result = MalConfig.hostname()
+        val result = MyanimelistConfig.hostname()
 
         // then
         assertThat(result).isEqualTo("myanimelist.net")
@@ -30,7 +30,7 @@ internal class MalConfigTest {
         val id = "1535"
 
         // when
-        val result = MalConfig.buildAnimeLink(id)
+        val result = MyanimelistConfig.buildAnimeLink(id)
 
         // then
         assertThat(result).isEqualTo(URI("https://myanimelist.net/anime/$id"))
@@ -42,7 +42,7 @@ internal class MalConfigTest {
         val id = "1535"
 
         // when
-        val result = MalConfig.buildDataDownloadLink(id)
+        val result = MyanimelistConfig.buildDataDownloadLink(id)
 
         // then
         assertThat(result).isEqualTo(URI("https://myanimelist.net/anime/$id"))
@@ -51,7 +51,7 @@ internal class MalConfigTest {
     @Test
     fun `file suffix must be html`() {
         // when
-        val result = MalConfig.fileSuffix()
+        val result = MyanimelistConfig.fileSuffix()
 
         // then
         assertThat(result).isEqualTo("html")
