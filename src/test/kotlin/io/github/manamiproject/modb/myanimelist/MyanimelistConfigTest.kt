@@ -1,4 +1,4 @@
-package io.github.manamiproject.modb.mal
+package io.github.manamiproject.modb.myanimelist
 
 import org.assertj.core.api.Assertions.assertThat
 import kotlin.test.Test

@@ -1,4 +1,4 @@
-package io.github.manamiproject.modb.mal
+package io.github.manamiproject.modb.myanimelist
 
 import com.github.tomakehurst.wiremock.WireMockServer
 import com.github.tomakehurst.wiremock.client.WireMock.*

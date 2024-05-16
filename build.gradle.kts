@@ -9,7 +9,7 @@ plugins {
 group = "io.github.manamiproject"
 version = project.findProperty("release.version") as String? ?: ""
 
-val projectName = "modb-mal"
+val projectName = "modb-myanimelist"
 val githubUsername = "manami-project"
 
 repositories {

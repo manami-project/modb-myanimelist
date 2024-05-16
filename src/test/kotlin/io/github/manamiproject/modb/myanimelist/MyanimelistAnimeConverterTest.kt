@@ -1,4 +1,4 @@
-package io.github.manamiproject.modb.mal
+package io.github.manamiproject.modb.myanimelist
 
 import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.FileSuffix

@@ -1,5 +1,5 @@
-![Build](https://github.com/manami-project/modb-mal/actions/workflows/build.yml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/manami-project/modb-mal/badge.svg)](https://coveralls.io/github/manami-project/modb-mal) ![jdk21](https://img.shields.io/badge/jdk-21-informational)
-# modb-mal
+![Build](https://github.com/manami-project/modb-myanimelist/actions/workflows/build.yml/badge.svg) [![Coverage Status](https://coveralls.io/repos/github/manami-project/modb-myanimelist/badge.svg)](https://coveralls.io/github/manami-project/modb-myanimelist) ![jdk21](https://img.shields.io/badge/jdk-21-informational)
+# modb-myanimelist
 _[modb](https://github.com/manami-project?tab=repositories&q=modb&type=source)_ stands for _**M**anami **O**ffline **D**ata**B**ase_. Repositories prefixed with this acronym are used to create the [manami-project/anime-offline-database](https://github.com/manami-project/anime-offline-database).
 
 # What does this lib do?

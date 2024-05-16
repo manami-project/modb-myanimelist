@@ -1,1 +1,1 @@
-rootProject.name = "modb-mal"
+rootProject.name = "modb-myanimelist"
