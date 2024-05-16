@@ -4,6 +4,7 @@ import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.converter.AnimeConverter
 import io.github.manamiproject.modb.core.coroutines.ModbDispatchers.LIMITED_CPU
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extensions.remove
 import io.github.manamiproject.modb.core.extractor.DataExtractor
 import io.github.manamiproject.modb.core.extractor.ExtractionResult
 import io.github.manamiproject.modb.core.extractor.XmlDataExtractor
@@ -73,7 +74,7 @@ public class MalAnimeConverter(
             !title.contains(';')  -> {
                 processedSynonyms.addAll(
                     synonyms.flatMap { it.split("; ") }
-                        .map { it.replace(";", EMPTY) }
+                        .map { it.remove(";") }
                         .map { it.trim() }
                 )
             }

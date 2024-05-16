@@ -4,6 +4,7 @@ import io.github.manamiproject.modb.core.config.AnimeId
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
 import io.github.manamiproject.modb.core.extensions.EMPTY
+import io.github.manamiproject.modb.core.extensions.neitherNullNorBlank
 import io.github.manamiproject.modb.core.extensions.pickRandom
 import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
 import io.github.manamiproject.modb.core.httpclient.BrowserType.MOBILE
@@ -37,7 +38,7 @@ public class MalDownloader(
             headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
         )
 
-        check(response.bodyAsText.isNotBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
+        check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [malId=$id] with response code [${response.code}]" }
 
         return when(response.code) {
             200 -> response.bodyAsText
