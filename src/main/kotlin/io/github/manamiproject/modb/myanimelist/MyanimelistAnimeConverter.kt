@@ -44,7 +44,8 @@ public class MyanimelistAnimeConverter(
             "premiered" to "//td[contains(text(), 'Premiered')]/following-sibling::*/text()",
             "aired" to "//td[contains(text(), 'Aired')]/following-sibling::*/text()",
             "picture" to "//div[contains(@class, 'status-block')]/div[@itemprop='image']/@content",
-            "relatedAnime" to "//div[@id='related-manga']/table/tbody//a[contains(@href, 'https://myanimelist.net/anime/')]/@href",
+            "relatedAnime" to "//table[contains(@class, 'entries-table')]//a/@href",
+            "relatedAnimeDetails" to "//div[contains(@class, 'anime-detail-related-entries')]//a/@href",
             "synonyms" to "//h2[contains(text(), 'Information')]/following-sibling::*//tr[0]/td[1]",
         ))
 
@@ -152,14 +153,27 @@ public class MyanimelistAnimeConverter(
     }
 
     private fun extractRelatedAnime(data: ExtractionResult): HashSet<URI> {
-        if (data.notFound("relatedAnime")) {
-            return hashSetOf()
+        val relatedAnimeDetails = if (data.notFound("relatedAnimeDetails")) {
+            hashSetOf()
+        } else {
+            data.listNotNull<String>("relatedAnimeDetails")
+                .filter { it.trim().startsWith(config.buildAnimeLink(EMPTY).toString()) }
+                .mapNotNull { Regex("[0-9]+").find(it)?.value }
+                .map { config.buildAnimeLink(it) }
+                .toHashSet()
         }
 
-        return data.listNotNull<String>("relatedAnime")
-            .mapNotNull { Regex("[0-9]+").find(it)?.value }
-            .map { config.buildAnimeLink(it) }
-            .toHashSet()
+        val relatedAnime = if (data.notFound("relatedAnime")) {
+            hashSetOf()
+        } else {
+            data.listNotNull<String>("relatedAnime")
+                .filter { it.trim().startsWith(config.buildAnimeLink(EMPTY).toString()) }
+                .mapNotNull { Regex("[0-9]+").find(it)?.value }
+                .map { config.buildAnimeLink(it) }
+                .toHashSet()
+        }
+
+        return relatedAnime.union(relatedAnimeDetails).toHashSet()
     }
 
     private fun extractStatus(data: ExtractionResult): Status {
