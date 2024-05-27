@@ -597,9 +597,10 @@ internal class MyanimelistAnimeConverterTest {
 
                 // then
                 assertThat(result.synonyms).containsExactlyInAnyOrder(
-                    "Firewood, Kanta and Granpa",
-                    "Firewood, Kanta, and Grandpa",
-                    "薪とカンタとじいじいと。",
+                    "'Tis Time for \"Torture,\" Princess",
+                    "It's Time for \"Interrogation\", Princess!",
+                    "Hime-sama \"Goumon\" no Jikan desu",
+                    "姫様“拷問”の時間です",
                 )
             }
         }

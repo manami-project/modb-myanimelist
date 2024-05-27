@@ -105,7 +105,7 @@ internal fun main() {
         downloader.download("30088").writeToFile(resourceFile("file_converter_tests/episodes/unknown.html"))
         delay(random(3000, 4800))
 
-        downloader.download("55715").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html"))
+        downloader.download("55571").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/neither_picture_nor_thumbnail.html"))
         delay(random(3000, 4800))
         downloader.download("10163").writeToFile(resourceFile("file_converter_tests/picture_and_thumbnail/picture_and_thumbnail_available.html"))
         delay(random(3000, 4800))
@@ -128,7 +128,7 @@ internal fun main() {
         delay(random(3000, 4800))
         downloader.download("21329").writeToFile(resourceFile("file_converter_tests/status/finished.html"))
         delay(random(3000, 4800))
-        downloader.download("54915").writeToFile(resourceFile("file_converter_tests/status/upcoming.html"))
+        downloader.download("53065").writeToFile(resourceFile("file_converter_tests/status/upcoming.html"))
         delay(random(3000, 4800))
 
         downloader.download("100").writeToFile(resourceFile("file_converter_tests/synonyms/multiple_languages_one_each.html"))
@@ -149,7 +149,7 @@ internal fun main() {
         delay(random(3000, 4800))
         downloader.download("993").writeToFile(resourceFile("file_converter_tests/synonyms/semicolon_in_title_but_not_in_synonyms.html"))
         delay(random(3000, 4800))
-        downloader.download("10863").writeToFile(resourceFile("file_converter_tests/synonyms/synonym_contains_comma_but_title_does_not.html"))
+        downloader.download("55774").writeToFile(resourceFile("file_converter_tests/synonyms/synonym_contains_comma_but_title_does_not.html"))
         delay(random(3000, 4800))
         downloader.download("12665").writeToFile(resourceFile("file_converter_tests/synonyms/synonym_contains_comma_followed_by_whitespace.html"))
         delay(random(3000, 4800))
