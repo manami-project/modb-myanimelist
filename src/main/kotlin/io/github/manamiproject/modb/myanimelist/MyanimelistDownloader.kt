@@ -1,17 +1,14 @@
 package io.github.manamiproject.modb.myanimelist
 
 import io.github.manamiproject.modb.core.config.AnimeId
+import io.github.manamiproject.modb.core.config.ConfigRegistry
+import io.github.manamiproject.modb.core.config.DefaultConfigRegistry
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.downloader.Downloader
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.neitherNullNorBlank
-import io.github.manamiproject.modb.core.extensions.pickRandom
-import io.github.manamiproject.modb.core.httpclient.Browser.FIREFOX
+import io.github.manamiproject.modb.core.httpclient.*
 import io.github.manamiproject.modb.core.httpclient.BrowserType.MOBILE
-import io.github.manamiproject.modb.core.httpclient.DefaultHttpClient
-import io.github.manamiproject.modb.core.httpclient.HttpClient
-import io.github.manamiproject.modb.core.httpclient.RetryCase
-import io.github.manamiproject.modb.core.httpclient.UserAgents
 import io.github.manamiproject.modb.core.logging.LoggerDelegate
 
 /**
@@ -22,6 +19,8 @@ import io.github.manamiproject.modb.core.logging.LoggerDelegate
  */
 public class MyanimelistDownloader(
     private val config: MetaDataProviderConfig,
+    private val configRegistry: ConfigRegistry = DefaultConfigRegistry,
+    private val headerCreator: HeaderCreator = DefaultHeaderCreator(configRegistry = configRegistry),
     private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()).apply {
         retryBehavior.addCases(
             RetryCase { it.code == 403 },
@@ -33,9 +32,13 @@ public class MyanimelistDownloader(
     override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
         log.debug { "Downloading [myanimelistId=$id]" }
 
+        val url = config.buildDataDownloadLink(id).toURL()
         val response = httpClient.get(
-            url = config.buildDataDownloadLink(id).toURL(),
-            headers = mapOf(USER_AGENT to listOf(UserAgents.userAgents(FIREFOX, MOBILE).pickRandom())),
+            url = url,
+            headers = headerCreator.createHeadersFor(
+                url = url,
+                browserType = MOBILE,
+            ).map { it.key to setOf(it.value) }.toMap(),
         )
 
         check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [myanimelistId=$id] with response code [${response.code}]" }
@@ -59,6 +62,5 @@ public class MyanimelistDownloader(
 
     private companion object {
         private val log by LoggerDelegate()
-        private const val USER_AGENT = "User-Agent"
     }
 }
