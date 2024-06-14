@@ -38,7 +38,7 @@ public class MyanimelistDownloader(
             headers = headerCreator.createHeadersFor(
                 url = url,
                 browserType = MOBILE,
-            ).map { it.key to setOf(it.value) }.toMap(),
+            ),
         )
 
         check(response.bodyAsText.neitherNullNorBlank()) { "Response body was blank for [myanimelistId=$id] with response code [${response.code}]" }
