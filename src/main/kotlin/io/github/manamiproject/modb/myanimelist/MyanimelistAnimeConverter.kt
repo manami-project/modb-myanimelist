@@ -263,7 +263,13 @@ public class MyanimelistAnimeConverter(
         }
     }
 
-    private companion object {
+    public companion object {
         private val log by LoggerDelegate()
+
+        /**
+         * Singleton of [MyanimelistAnimeConverter]
+         * @since 6.1.0
+         */
+        public val instance: MyanimelistAnimeConverter by lazy { MyanimelistAnimeConverter() }
     }
 }

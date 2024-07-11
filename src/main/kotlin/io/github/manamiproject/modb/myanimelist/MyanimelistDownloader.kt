@@ -19,7 +19,7 @@ import io.github.manamiproject.modb.core.logging.LoggerDelegate
  */
 public class MyanimelistDownloader(
     private val config: MetaDataProviderConfig,
-    private val configRegistry: ConfigRegistry = DefaultConfigRegistry,
+    private val configRegistry: ConfigRegistry = DefaultConfigRegistry.instance,
     private val headerCreator: HeaderCreator = DefaultHeaderCreator(configRegistry = configRegistry),
     private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()).apply {
         retryBehavior.addCases(

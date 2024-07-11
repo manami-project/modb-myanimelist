@@ -1,8 +1,8 @@
 package io.github.manamiproject.modb.myanimelist
 
 import org.assertj.core.api.Assertions.assertThat
-import kotlin.test.Test
 import java.net.URI
+import kotlin.test.Test
 
 internal class MyanimelistConfigTest {
 
