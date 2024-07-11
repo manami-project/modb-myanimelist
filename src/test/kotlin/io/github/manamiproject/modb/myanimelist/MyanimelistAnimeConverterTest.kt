@@ -15,8 +15,8 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
-import kotlin.test.Test
 import java.net.URI
+import kotlin.test.Test
 
 internal class MyanimelistAnimeConverterTest {
 
@@ -1799,6 +1799,23 @@ internal class MyanimelistAnimeConverterTest {
                     assertThat(result.animeSeason.year).isEqualTo(2010)
                 }
             }
+        }
+    }
+
+    @Nested
+    inner class CompanionObjectTests {
+
+        @Test
+        fun `instance property always returns same instance`() {
+            // given
+            val previous = MyanimelistAnimeConverter.instance
+
+            // when
+            val result = MyanimelistAnimeConverter.instance
+
+            // then
+            assertThat(result).isExactlyInstanceOf(MyanimelistAnimeConverter::class.java)
+            assertThat(result===previous).isTrue()
         }
     }
 }
