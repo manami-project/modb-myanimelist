@@ -14,14 +14,14 @@ import io.github.manamiproject.modb.core.logging.LoggerDelegate
 /**
  * Downloads anime data from myanimelist.net
  * @since 1.0.0
- * @param config Configuration for downloading data.
+ * @param metaDataProviderConfig Configuration for downloading data.
  * @param httpClient To actually download the anime data.
  */
 public class MyanimelistDownloader(
-    private val config: MetaDataProviderConfig,
+    private val metaDataProviderConfig: MetaDataProviderConfig = MyanimelistConfig,
     private val configRegistry: ConfigRegistry = DefaultConfigRegistry.instance,
     private val headerCreator: HeaderCreator = DefaultHeaderCreator(configRegistry = configRegistry),
-    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = config.isTestContext()).apply {
+    private val httpClient: HttpClient = DefaultHttpClient(isTestContext = metaDataProviderConfig.isTestContext()).apply {
         retryBehavior.addCases(
             RetryCase { it.code == 403 },
             RetryCase { it.code == 404 && it.bodyAsText.contains("was not found on this server.</p>") },
@@ -32,7 +32,7 @@ public class MyanimelistDownloader(
     override suspend fun download(id: AnimeId, onDeadEntry: suspend (AnimeId) -> Unit): String {
         log.debug { "Downloading [myanimelistId=$id]" }
 
-        val url = config.buildDataDownloadLink(id).toURL()
+        val url = metaDataProviderConfig.buildDataDownloadLink(id).toURL()
         val response = httpClient.get(
             url = url,
             headers = headerCreator.createHeadersFor(
@@ -60,7 +60,13 @@ public class MyanimelistDownloader(
         }
     }
 
-    private companion object {
+    public companion object {
         private val log by LoggerDelegate()
+
+        /**
+         * Singleton of [MyanimelistDownloader]
+         * @since 1.0.0
+         */
+        public val instance: MyanimelistDownloader by lazy { MyanimelistDownloader() }
     }
 }

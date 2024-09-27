@@ -9,10 +9,7 @@ import io.github.manamiproject.modb.core.config.Hostname
 import io.github.manamiproject.modb.core.config.MetaDataProviderConfig
 import io.github.manamiproject.modb.core.extensions.EMPTY
 import io.github.manamiproject.modb.core.extensions.toAnimeId
-import io.github.manamiproject.modb.test.MockServerTestCase
-import io.github.manamiproject.modb.test.WireMockServerCreator
-import io.github.manamiproject.modb.test.exceptionExpected
-import io.github.manamiproject.modb.test.shouldNotBeInvoked
+import io.github.manamiproject.modb.test.*
 import kotlinx.coroutines.runBlocking
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Nested
@@ -444,5 +441,24 @@ internal class MyanimelistDownloaderTest : MockServerTestCase<WireMockServer> by
 
         // then
         assertThat(result).hasMessage("Response body was blank for [myanimelistId=1535] with response code [200]")
+    }
+
+    @Nested
+    inner class CompanionObjectTests {
+
+        @Test
+        fun `instance property always returns same instance`() {
+            tempDirectory {
+                // given
+                val previous = MyanimelistDownloader.instance
+
+                // when
+                val result = MyanimelistDownloader.instance
+
+                // then
+                assertThat(result).isExactlyInstanceOf(MyanimelistDownloader::class.java)
+                assertThat(result===previous).isTrue()
+            }
+        }
     }
 }
