@@ -25,10 +25,10 @@ import java.net.URI
  * Converts raw data to an [Anime].
  * Requires raw HTML from the mobile site version.
  * @since 1.0.0
- * @param config Configuration for converting data.
+ * @param metaDataProviderConfig Configuration for converting data.
  */
 public class MyanimelistAnimeConverter(
-    private val config: MetaDataProviderConfig = MyanimelistConfig,
+    private val metaDataProviderConfig: MetaDataProviderConfig = MyanimelistConfig,
     private val extractor: DataExtractor = XmlDataExtractor,
 ) : AnimeConverter {
 
@@ -149,7 +149,7 @@ public class MyanimelistAnimeConverter(
         val matchResult = Regex("/[0-9]+/").find(text)
         val rawId = matchResult?.value ?: throw IllegalStateException("Unable to extract source")
         val id = rawId.trimStart('/').trimEnd('/')
-        return hashSetOf(config.buildAnimeLink(id))
+        return hashSetOf(metaDataProviderConfig.buildAnimeLink(id))
     }
 
     private fun extractRelatedAnime(data: ExtractionResult): HashSet<URI> {
@@ -157,9 +157,9 @@ public class MyanimelistAnimeConverter(
             hashSetOf()
         } else {
             data.listNotNull<String>("relatedAnimeDetails")
-                .filter { it.trim().startsWith(config.buildAnimeLink(EMPTY).toString()) }
+                .filter { it.trim().startsWith(metaDataProviderConfig.buildAnimeLink(EMPTY).toString()) }
                 .mapNotNull { Regex("[0-9]+").find(it)?.value }
-                .map { config.buildAnimeLink(it) }
+                .map { metaDataProviderConfig.buildAnimeLink(it) }
                 .toHashSet()
         }
 
@@ -167,9 +167,9 @@ public class MyanimelistAnimeConverter(
             hashSetOf()
         } else {
             data.listNotNull<String>("relatedAnime")
-                .filter { it.trim().startsWith(config.buildAnimeLink(EMPTY).toString()) }
+                .filter { it.trim().startsWith(metaDataProviderConfig.buildAnimeLink(EMPTY).toString()) }
                 .mapNotNull { Regex("[0-9]+").find(it)?.value }
-                .map { config.buildAnimeLink(it) }
+                .map { metaDataProviderConfig.buildAnimeLink(it) }
                 .toHashSet()
         }
 
