@@ -26,6 +26,7 @@ import java.net.URI
  * Requires raw HTML from the mobile site version.
  * @since 1.0.0
  * @param metaDataProviderConfig Configuration for converting data.
+ * @param extractor Extracts specific data from raw content.
  */
 public class MyanimelistAnimeConverter(
     private val metaDataProviderConfig: MetaDataProviderConfig = MyanimelistConfig,
@@ -64,7 +65,7 @@ public class MyanimelistAnimeConverter(
             sources = extractSourcesEntry(data),
             synonyms = postProcessSynonyms(title, extractSynonyms(data)),
             relatedAnime = extractRelatedAnime(data),
-            tags = extractTags(data)
+            tags = extractTags(data),
         )
     }
 
